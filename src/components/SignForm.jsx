@@ -24,7 +24,7 @@ export default function SignForm() {
     } else {
       setIsValid(false);
       setIsDuplicated(true);
-      setWarningMessage('영문 소문자와 숫자 조합으로 최대 12자까지 가능합니다');
+      setWarningMessage('영문 소문자와 숫자 조합으로 최대 10자까지 가능합니다');
     }
 
     if (input === '') {
@@ -66,7 +66,7 @@ export default function SignForm() {
         <Button
           className='login__button--start'
           text='시작하기'
-          disabled={isValid ? isDuplicated : true}
+          disabled={isDuplicated}
           onclick={() => {
             submitNickname(nickname);
           }}
