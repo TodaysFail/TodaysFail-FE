@@ -8,12 +8,12 @@ export default function SignForm() {
 
   const checkValidNickname = (event) => {
     const input = event.target.value;
-    const regex = /^[a-z0-9]{1,12}$/; // 영문 소문자와 숫자만 사용 가능하고 최소 길이는 1 최대 길이는 12
+    const regex = /^[a-z0-9]{1,10}$/; // 영문 소문자와 숫자만 사용 가능하고 최소 길이는 1 최대 길이는 12
 
     if (regex.test(input)) {
       setNickname(input);
       setIsValid(true);
-      setWarningMessage('');
+      setWarningMessage('유효한 닉네임입니다. 중복검사를 해주세요 : )');
     } else {
       setIsValid(false);
       setWarningMessage('영문 소문자와 숫자 조합으로 최대 12자까지 가능합니다');
