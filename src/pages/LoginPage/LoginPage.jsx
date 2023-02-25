@@ -12,7 +12,7 @@ export default function LoginPage() {
 
   return (
     <div>
-      <h2>닉네임을 정해주세요</h2>
+      <h2>오늘의 실패를 기록하고 성장하기</h2>
       <SignForm />
     </div>
   );
