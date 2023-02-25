@@ -1,9 +1,9 @@
 ---
 name: Feature Template
 about: 구현할 기능을 이슈에 등록해주세요.
-title: "[tag] 구현할 기능"
+title: "tag: 구현할 기능"
 labels: ""
-assignees: ""
+assignees: "username"
 ---
 
 <!-- 제목 양식 // prefix: 구현할 기능 -->
