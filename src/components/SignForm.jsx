@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import DuplicationCheckBtn from './DuplicationCheckBtn';
 
 export default function SignForm() {
   const [nickname, setNickname] = useState('');
@@ -33,6 +34,7 @@ export default function SignForm() {
         value={nickname}
         onChange={checkValidNickname}
       />
+      <DuplicationCheckBtn isValid={isValid} nickname={nickname} setWarningMessage={setWarningMessage} />
       {warningMessage && <div>{warningMessage}</div>}
       <div>
         <button disabled={!isValid}>시작하기</button>
