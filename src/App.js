@@ -1,7 +1,9 @@
+import Router from './router/Router';
+
 function App() {
   return (
-    <div className="App">
-      <h1>오늘의 실패</h1>
+    <div className='App'>
+      <Router />
     </div>
   );
 }
