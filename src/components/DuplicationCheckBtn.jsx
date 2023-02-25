@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React from 'react';
+import Button from './Button';
 
 export default function DuplicationCheckBtn({ isValid, nickname, setWarningMessage, setIsDuplicated }) {
   const duplicationNicknameAPI = async (nickname) => {
@@ -18,16 +19,13 @@ export default function DuplicationCheckBtn({ isValid, nickname, setWarningMessa
   };
 
   return (
-    <span>
-      <button
-        className='login__button--duplicationCheck'
-        disabled={!isValid}
-        onClick={() => {
-          duplicationNicknameAPI(nickname);
-        }}
-      >
-        중복검사
-      </button>
-    </span>
+    <Button
+      className='login__button--duplicationCheck'
+      text='중복검사'
+      disabled={!isValid}
+      handleClick={() => {
+        duplicationNicknameAPI(nickname);
+      }}
+    ></Button>
   );
 }

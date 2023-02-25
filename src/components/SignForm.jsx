@@ -1,4 +1,7 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Button from './Button';
 import DuplicationCheckBtn from './DuplicationCheckBtn';
 
 export default function SignForm() {
@@ -6,6 +9,7 @@ export default function SignForm() {
   const [isValid, setIsValid] = useState(false);
   const [warningMessage, setWarningMessage] = useState('');
   const [isDuplicated, setIsDuplicated] = useState(true);
+  const navigate = useNavigate();
 
   // 유효성 체크: 영문 소문자와 숫자만 사용 가능하고 최소 길이는 1 최대 길이는 10
   const checkValidNickname = (event) => {
@@ -29,6 +33,19 @@ export default function SignForm() {
     }
   };
 
+  // 시작버튼 클릭 시 서버에 닉네임 전달
+  const submitNickname = async (nickname) => {
+    await axios
+      .post('http://localhost:3000/login', {
+        nickname: `${nickname}`,
+      })
+      .then((res) => {
+        navigate('/');
+        localStorage.setItem('nickname', nickname);
+      })
+      .catch((res) => {});
+  };
+
   return (
     <div>
       <input
@@ -46,7 +63,14 @@ export default function SignForm() {
       />
       {warningMessage && <div>{warningMessage}</div>}
       <div>
-        <button disabled={isValid ? isDuplicated : true}>시작하기</button>
+        <Button
+          className='login__button--start'
+          text='시작하기'
+          disabled={isValid ? isDuplicated : true}
+          onclick={() => {
+            submitNickname(nickname);
+          }}
+        ></Button>
       </div>
     </div>
   );
