@@ -25,6 +25,8 @@ export default function SharePage() {
 
   useEffect(() => {
     getReceiptData();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

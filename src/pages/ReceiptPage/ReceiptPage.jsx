@@ -30,6 +30,8 @@ export default function UserSharePage() {
 
   useEffect(() => {
     getReceiptData();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
