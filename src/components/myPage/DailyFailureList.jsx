@@ -1,27 +1,33 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import DailyFailure from './DailyFailure';
 import NoFailures from './NoFailures';
 
 export default function DailyFailureList({ nickname }) {
   const [dailyFailures, setDailyFailures] = useState([]);
+  const navigate = useNavigate();
 
-  const getRecord = () => {
+  const getRecord = useCallback(() => {
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/record?writer=${localStorage.getItem('nickname')}`, {
+      .get(`${process.env.REACT_APP_BASE_URL}/record?writer=${nickname}`, {
         headers: {
           'Content-Type': 'application/json',
         },
       })
       .then((res) => {
         setDailyFailures(res.data);
+      })
+      .catch(() => {
+        localStorage.removeItem('nickname');
+        navigate('/login');
       });
-  };
+  }, [navigate, nickname]);
 
   useEffect(() => {
     getRecord();
-  }, []);
+  }, [getRecord]);
 
   return (
     <ListContainer>
@@ -34,7 +40,6 @@ export default function DailyFailureList({ nickname }) {
       ) : (
         <NoFailures />
       )}
-      {/* <NoFailures /> */}
     </ListContainer>
   );
 }
