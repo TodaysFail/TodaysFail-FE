@@ -1,9 +1,24 @@
-import React from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import receiptBg from '../../assets/receipt.png';
 import FailCard from '../../components/share/FailCard';
 
 export default function UserSharePage() {
+  const [date, setDate] = useState('');
+  const receiptId = `81afccf1-5d01-4ceb-b9d6-fa55c37189b0`;
+
+  const GetDate = async () => {
+    await axios
+      .get(`https://port-0-todaysfail-be-r8xoo2mlejm1bez.sel3.cloudtype.app/api/v1/receipt/${receiptId}`)
+      .then((res) => setDate(res.data.date))
+      .catch((res) => {});
+  };
+
+  useEffect(() => {
+    GetDate();
+  }, []);
+
   return (
     <Container>
       <h1 className='sr-only'>나의 영수증 공유 페이지</h1>
@@ -12,7 +27,7 @@ export default function UserSharePage() {
         <Title>실패 영수증</Title>
         <RecordDateContainer>
           <RecordDateContents>내일은 좀 더 성장할 소중한 경험 내역</RecordDateContents>
-          <RecordDateContents>Aprill 12 - 14, 2019</RecordDateContents>
+          <RecordDateContents>{date}</RecordDateContents>
         </RecordDateContainer>
         <TotalFailContainer>
           <TotalFailTitle>Total failure</TotalFailTitle>
