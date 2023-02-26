@@ -2,18 +2,16 @@ import React from 'react';
 import styled from 'styled-components';
 import feelIcon from '../../assets/feel-icon.svg';
 
-export default function FailCard() {
+export default function FailCard({ title, content, feel, createdAt, order }) {
   return (
     <Conatiner>
-      <Number>01</Number>
+      <Number>{order}</Number>
       <Contents>
-        <ContentsTitle>핫케이크 태움</ContentsTitle>
+        <ContentsTitle>{title}</ContentsTitle>
         <ContentsCount>x 1</ContentsCount>
-        <ContentsText>
-          분명히 가스불을 약으로 했는데 어느 순간 분명히 가스불을 약으로 했는데 어느 순간 재가 됐다.
-        </ContentsText>
-        <ContentsFeel>다음에 더 잘하면 된다</ContentsFeel>
-        <ContentsCount>03:16:42</ContentsCount>
+        <ContentsText>{content}</ContentsText>
+        <ContentsFeel>{feel}</ContentsFeel>
+        <ContentsCount>{createdAt}</ContentsCount>
       </Contents>
     </Conatiner>
   );

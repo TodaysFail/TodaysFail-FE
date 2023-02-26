@@ -6,17 +6,25 @@ import FailCard from '../../components/share/FailCard';
 
 export default function UserSharePage() {
   const [date, setDate] = useState('');
-  const receiptId = `81afccf1-5d01-4ceb-b9d6-fa55c37189b0`;
+  const [total, setTotal] = useState('');
+  const [receiptList, setReceiptList] = useState([]);
+  const receiptId = `b0a7ce39-cb94-4955-b050-dba2ebad3016`;
 
-  const GetDate = async () => {
+  const GetReceiptData = async () => {
     await axios
       .get(`https://port-0-todaysfail-be-r8xoo2mlejm1bez.sel3.cloudtype.app/api/v1/receipt/${receiptId}`)
-      .then((res) => setDate(res.data.date))
+      .then((res) => {
+        setDate(res.data.date);
+        setReceiptList(res.data.receiptList);
+        setTotal(res.data.total);
+      })
       .catch((res) => {});
   };
 
+  console.log(receiptList);
+
   useEffect(() => {
-    GetDate();
+    GetReceiptData();
   }, []);
 
   return (
@@ -31,11 +39,17 @@ export default function UserSharePage() {
         </RecordDateContainer>
         <TotalFailContainer>
           <TotalFailTitle>Total failure</TotalFailTitle>
-          <TotalFailCount>19</TotalFailCount>
-          <FailCard />
-          <FailCard />
-          <FailCard />
-          <FailCard />
+          <TotalFailCount>{total}</TotalFailCount>
+          {receiptList.map((receiptList, i) => (
+            <FailCard
+              key={receiptList.id}
+              order={i + 1 < 10 ? `0${i + 1}` : i + 1}
+              title={receiptList.title}
+              content={receiptList.content}
+              feel={receiptList.feel}
+              createdAt={receiptList.createdAt}
+            />
+          ))}
         </TotalFailContainer>
       </ReceiptContainer>
       <ShareButton>자랑하기</ShareButton>
