@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import DailyFailureList from '../../components/myPage/DailyFailureList';
@@ -8,10 +9,27 @@ import TodaysDate from '../../components/myPage/TodaysDate';
 
 export default function MyPage() {
   const navigate = useNavigate();
+  const nickname = localStorage.getItem('nickname');
+  const [isValid, setIsValid] = useState(true);
 
   useEffect(() => {
-    if (localStorage.getItem('nickname') === null) navigate('/login');
-  }, [navigate]);
+    axios
+      .get(`${process.env.REACT_APP_BASE_URL}/member/duplicate/${nickname}`, {
+        'Content-Type': 'application/json',
+      })
+      .then((res) => {
+        if (res.data === false) {
+          setIsValid(false);
+        }
+      })
+      .catch(() => {
+        navigate('/login');
+      });
+  }, [isValid, navigate, nickname]);
+
+  useEffect(() => {
+    if (nickname === null || !isValid) navigate('/login');
+  }, [isValid, navigate, nickname]);
 
   const handleClick = () => {
     navigate('/recordPage');
