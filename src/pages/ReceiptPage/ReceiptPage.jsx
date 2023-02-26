@@ -25,7 +25,7 @@ export default function UserSharePage() {
 
   // 영수증 공유 페이지 url 받아서 넘겨주기?
   const CopyUrl = async () => {
-    await navigator.clipboard.writeText('a');
+    await navigator.clipboard.writeText(`https://todaysfail.com/receipt/${receiptId}`);
   };
 
   useEffect(() => {
