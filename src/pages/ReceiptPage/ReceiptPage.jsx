@@ -2,17 +2,19 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import receiptBg from '../../assets/receipt.png';
-import FailCard from '../../components/share/FailCard';
+import FailCard from '../../components/receipt/FailCard';
+import CopyModal from '../../components/receipt/CopyModal';
 
 export default function UserSharePage() {
   const [date, setDate] = useState('');
   const [total, setTotal] = useState('');
   const [receiptList, setReceiptList] = useState([]);
-  const receiptId = `b0a7ce39-cb94-4955-b050-dba2ebad3016`;
+  const [isVisibleModal, setIsVisibleModal] = useState(false);
+  const receiptId = `b3074f1e-8059-43e2-a083-7aa9d090ee14`;
 
   const GetReceiptData = async () => {
     await axios
-      .get(`https://port-0-todaysfail-be-r8xoo2mlejm1bez.sel3.cloudtype.app/api/v1/receipt/${receiptId}`)
+      .get(`https://todaysfail.com/api/v1/receipt/${receiptId}`)
       .then((res) => {
         setDate(res.data.date);
         setReceiptList(res.data.receiptList);
@@ -21,7 +23,10 @@ export default function UserSharePage() {
       .catch((res) => {});
   };
 
-  console.log(receiptList);
+  // 영수증 공유 페이지 url 받아서 넘겨주기?
+  const CopyUrl = async () => {
+    await navigator.clipboard.writeText('a');
+  };
 
   useEffect(() => {
     GetReceiptData();
@@ -52,7 +57,15 @@ export default function UserSharePage() {
           ))}
         </TotalFailContainer>
       </ReceiptContainer>
-      <ShareButton>자랑하기</ShareButton>
+      <ShareButton
+        onClick={() => {
+          CopyUrl();
+          setIsVisibleModal(true);
+        }}
+      >
+        자랑하기
+      </ShareButton>
+      {isVisibleModal && <CopyModal setIsVisibleModal={setIsVisibleModal} />}
     </Container>
   );
 }
