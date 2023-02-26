@@ -13,7 +13,7 @@ export default function UserSharePage() {
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const receiptId = `f80fbeef-be03-4ea2-87ab-017fc259e586`;
 
-  const GetReceiptData = async () => {
+  const getReceiptData = async () => {
     await axios
       .get(`https://todaysfail.com/api/v1/receipt/${receiptId}`)
       .then((res) => {
@@ -29,7 +29,7 @@ export default function UserSharePage() {
   };
 
   useEffect(() => {
-    GetReceiptData();
+    getReceiptData();
   }, []);
 
   return (
