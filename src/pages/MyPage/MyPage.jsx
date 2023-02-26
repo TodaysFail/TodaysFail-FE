@@ -10,7 +10,7 @@ export default function MyPage() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (localStorage.getItem('nickname') === undefined) navigate('/login');
+    if (localStorage.getItem('nickname') === null) navigate('/login');
   }, [navigate]);
 
   const handleClick = () => {
