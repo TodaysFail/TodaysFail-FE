@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import TodaysFailLogo from '../../assets/logo.png';
 import receiptBg from '../../assets/receipt.png';
 import FailCard from '../../components/receipt/FailCard';
 import CopyModal from '../../components/receipt/CopyModal';
@@ -35,7 +36,7 @@ export default function UserSharePage() {
   return (
     <Container>
       <h1 className='sr-only'>나의 영수증 공유 페이지</h1>
-      <Logo>로고</Logo>
+      <Logo />
       <ReceiptContainer>
         <Title>실패 영수증</Title>
         <RecordDateContainer>
@@ -81,10 +82,11 @@ const Container = styled.section`
   align-items: center;
 `;
 
-const Logo = styled.div`
-  width: 120px;
-  height: 30px;
-  background-color: #d9d9d9;
+const Logo = styled.img.attrs({
+  src: TodaysFailLogo,
+  alt: '오늘의 실패',
+})`
+  width: 150px;
   text-align: center;
 `;
 
@@ -93,7 +95,7 @@ const ReceiptContainer = styled.section`
 
   width: 360px;
   height: 665px;
-  margin-top: 30px;
+  margin-top: 20px;
   padding: 0 15px;
   background-image: url(${receiptBg});
   font-family: 'Galmuri11';
