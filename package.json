@@ -21,6 +21,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "homepage": "https://todays-fail.netlify.app",
   "eslintConfig": {
     "extends": [
       "react-app",
