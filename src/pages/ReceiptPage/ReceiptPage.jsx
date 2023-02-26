@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import TodaysFailLogo from '../../assets/logo.png';
 import receiptBg from '../../assets/receipt.png';
 import FailCard from '../../components/receipt/FailCard';
 import CopyModal from '../../components/receipt/CopyModal';
+import Logo from '../../components/common/Logo';
 
 export default function UserSharePage() {
   const [date, setDate] = useState('');
@@ -24,7 +24,6 @@ export default function UserSharePage() {
       .catch((res) => {});
   };
 
-  // 영수증 공유 페이지 url 받아서 넘겨주기?
   const CopyUrl = async () => {
     await navigator.clipboard.writeText(`https://todaysfail.com/receipt/${receiptId}`);
   };
@@ -80,14 +79,6 @@ const Container = styled.section`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-
-const Logo = styled.img.attrs({
-  src: TodaysFailLogo,
-  alt: '오늘의 실패',
-})`
-  width: 150px;
-  text-align: center;
 `;
 
 const ReceiptContainer = styled.section`

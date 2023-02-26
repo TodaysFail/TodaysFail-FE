@@ -1,6 +1,10 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 export default function CopyModal({ setIsVisibleModal }) {
+  const navigate = useNavigate();
+  const receiptId = `f80fbeef-be03-4ea2-87ab-017fc259e586`;
+
   return (
     <Container>
       <ModalSection>
@@ -8,7 +12,7 @@ export default function CopyModal({ setIsVisibleModal }) {
         <SubText>오늘의 실패를 부담없이 공유해보세요!</SubText>
         <Button
           onClick={() => {
-            setIsVisibleModal(false);
+            navigate(`/receipt/${receiptId}`);
           }}
         >
           그럴게요
