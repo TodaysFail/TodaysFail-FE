@@ -44,9 +44,11 @@ export default function LoginPage() {
         warningMessage={warningMessage}
         setWarningMessage={setWarningMessage}
       />
+      <StyledHr />
       <LoginNoticeContainer>
-        <StyledHr />
-        {warningMessage && <Notice>{warningMessage}</Notice>}
+        <LoginNoticeContant>{warningMessage && <Notice>{warningMessage}</Notice>}</LoginNoticeContant>
+      </LoginNoticeContainer>
+      <LoginButtonContainer>
         <Button
           text='시작하기'
           disabled={isDuplicated}
@@ -54,14 +56,13 @@ export default function LoginPage() {
             submitNickname(nickname);
           }}
         ></Button>
-      </LoginNoticeContainer>
+      </LoginButtonContainer>
     </LoginContainer>
   );
 }
 
 const LoginContainer = styled.div`
   dispay: flex;
-  justify-content: center;
   flex-direction: column;
   width: 390px;
   height: 844px;
@@ -71,11 +72,23 @@ const LoginContainer = styled.div`
 
 const LoginTitleContainer = styled.div`
   flex-direction: column;
-  justify-content: center;
-  padding: 240px 120px;
+  padding: 230px 110px 170px 110px;
 `;
 
-const LoginNoticeContainer = styled.div``;
+const LoginButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const LoginNoticeContainer = styled.div`
+  display: flex;
+  margin: 10px 20px 60px 30px;
+`;
+const LoginNoticeContant = styled.div`
+  position: absolute;
+  display: flex;
+`;
 
 const Rectangle = styled.div`
   width: 165px;
@@ -89,14 +102,19 @@ const LoginTitle = styled.div`
   width: 300px;
   font-size: 14px;
   color: #1e1e1e;
+
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 150%;
+
+  letter-spacing: -0.011em;
+  color: #1e1e1e;
 `;
 
 const Notice = styled.div`
-  position: flex;
-  width: 132px;
-  height: 18px;
-  left: 36px;
-  top: 494px;
+  width: 300px;
 
   font-family: 'Pretendard';
   font-style: normal;

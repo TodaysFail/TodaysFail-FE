@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useDebounce } from '../../hooks/useDebounce';
+import { ReactComponent as Vector } from '../../assets/Vector.svg';
 
 export default function SignForm({ nickname, setNickname, setIsDuplicated, setWarningMessage }) {
   // 유효성 체크: 영문 소문자와 숫자만 사용 가능하고 최소 길이는 1 최대 길이는 10
@@ -25,7 +26,7 @@ export default function SignForm({ nickname, setNickname, setIsDuplicated, setWa
 
   // 커스텀 훅: 매 입력마다 요청 보내면 성능 저하 우려
   // debouncedCheckTerm에 바뀐 nickname 저장 됨
-  const debouncedCheckTerm = useDebounce(nickname, 500);
+  const debouncedCheckTerm = useDebounce(nickname, 480);
 
   // 닉네임 중복검사
   useEffect(() => {
@@ -51,15 +52,16 @@ export default function SignForm({ nickname, setNickname, setIsDuplicated, setWa
   return (
     <Wrapper>
       <Bullet>
-        <StyledInput
-          id='nickname-input'
-          type='text'
-          placeholder='닉네임을 정해주세요!'
-          value={nickname}
-          onChange={checkValidNickname}
-        />
-        <NicknameLength>{nickname.length} / 10</NicknameLength>
+        <Vector />
       </Bullet>
+      <StyledInput
+        id='nickname-input'
+        type='text'
+        placeholder='닉네임을 정해주세요!'
+        value={nickname}
+        onChange={checkValidNickname}
+      />
+      <NicknameLength>{nickname.length} / 10</NicknameLength>
     </Wrapper>
   );
 }
@@ -67,50 +69,40 @@ export default function SignForm({ nickname, setNickname, setIsDuplicated, setWa
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
-  background: pink;
 `;
-
-const Bullet = styled.li`
-  display: flex;
+const Bullet = styled.span`
+  margin: 0 auto;
 `;
 
 const StyledInput = styled.input`
-  width: 131px;
+  width: 300px;
   height: 24px;
   left: 36px;
   top: 457px;
-
+  border: none;
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
   line-height: 150%;
-  /* identical to box height, or 24px */
-
   letter-spacing: -0.011em;
-
-  /* gray */
-
-  color: #c7c7c7;
+  color: #000000;
+  ::placeholder {
+    color: #c7c7c7;
+  }
 `;
 
 const NicknameLength = styled.span`
-  width: 40px;
+  width: 60px;
   height: 24px;
   left: 335px;
   top: 457px;
-
   font-family: 'Pretendard';
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 150%;
-  /* identical to box height, or 24px */
-
   text-align: center;
   letter-spacing: -0.011em;
-
-  /* gray */
-  background: blue;
   color: #c7c7c7;
 `;
