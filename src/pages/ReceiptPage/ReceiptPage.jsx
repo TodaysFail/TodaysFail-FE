@@ -10,7 +10,7 @@ export default function UserSharePage() {
   const [total, setTotal] = useState('');
   const [receiptList, setReceiptList] = useState([]);
   const [isVisibleModal, setIsVisibleModal] = useState(false);
-  const receiptId = `b3074f1e-8059-43e2-a083-7aa9d090ee14`;
+  const receiptId = `f80fbeef-be03-4ea2-87ab-017fc259e586`;
 
   const GetReceiptData = async () => {
     await axios
@@ -42,9 +42,9 @@ export default function UserSharePage() {
           <RecordDateContents>내일은 좀 더 성장할 소중한 경험 내역</RecordDateContents>
           <RecordDateContents>{date}</RecordDateContents>
         </RecordDateContainer>
+        <TotalFailTitle>Total failure</TotalFailTitle>
+        <TotalFailCount>{total}</TotalFailCount>
         <TotalFailContainer>
-          <TotalFailTitle>Total failure</TotalFailTitle>
-          <TotalFailCount>{total}</TotalFailCount>
           {receiptList.map((receiptList, i) => (
             <FailCard
               key={receiptList.id}
@@ -89,6 +89,8 @@ const Logo = styled.div`
 `;
 
 const ReceiptContainer = styled.section`
+  position: relative;
+
   width: 360px;
   height: 665px;
   margin-top: 30px;
@@ -121,8 +123,8 @@ const RecordDateContents = styled.p`
 
 const TotalFailContainer = styled.section`
   width: 330px;
-  height: 435px;
-  margin-top: 35px;
+  height: 415px;
+  margin-top: 14px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -136,7 +138,7 @@ const TotalFailContainer = styled.section`
 const TotalFailTitle = styled.h3`
   width: 100%;
   padding-bottom: 9px;
-  margin-bottom: 11px;
+  margin-top: 36px;
   font-size: 12px;
   font-weight: 700;
   border-bottom: 1px solid #b8b8b8;
@@ -146,8 +148,8 @@ const TotalFailCount = styled.span`
   position: absolute;
   font-size: 12px;
   font-weight: 700;
-  right: 0;
-  margin-top: 3px;
+  top: 173px;
+  right: 15px;
 `;
 
 const ShareButton = styled.button`
