@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import todaysFailLogo from '../../assets/logo.png';
 
 export default function RedcordPage() {
   const [dateYMD, setDateYMD] = useState('2023-01-01');
@@ -30,7 +31,9 @@ export default function RedcordPage() {
 
   return (
     <RedcordPageContainer>
-      <Logo>오늘의 실패</Logo>
+      <LogoContainer>
+        <Logo />
+      </LogoContainer>
       <RedcordPageHeaderContainer>
         <RedcordPageHeaderContent>
           <RedcordPageHeaderTitle>어떤 실패를 경험하셨나요?</RedcordPageHeaderTitle>
@@ -56,8 +59,12 @@ const RedcordPageContainer = styled.div`
 const RedcordPageHeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 360px;
+  height: 122px;
   background: green;
+  background: #000000;
+  border-radius: 10px;
+  margin: 10px 10px 10px 15px;
 `;
 
 const RedcordPageHeaderContent = styled.div`
@@ -67,20 +74,72 @@ const RedcordPageHeaderContent = styled.div`
 
 const RedcordPageHeaderTitle = styled.h2`
   width: 390px;
-  padding: 10px 10px 10px 48px;
+  padding: 8px 10px 0px 79px;
+  color: white;
+
+  font-family: 'Pretendard-Light';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 150%;
+  /* identical to box height, or 30px */
+
+  letter-spacing: -0.011em;
+
+  /* white */
+
+  color: #ffffff;
 `;
 
 const RedcordPageHeaderDate = styled.div`
   display: flex;
-  width: 390px;
-  justify-content: space-between;
-  padding: 10px;
+  width: 330px;
+  justify-content: flex-start;
+  padding: 5px;
   border-top: solid 1px;
   border-bottom: solid 1px;
+  border-color: white;
+  margin: 0px 10px 10px 13px;
+  flex-wrap: nowrap;
 `;
-const DateYMD = styled.span``;
-const DateHMS = styled.span``;
 
-const Logo = styled.div`
-  padding: 10px 10px 10px 150px;
+const DateYMD = styled.span`
+  color: white;
+  margin: 0px 198px 0px 0px;
+
+  font-family: 'Pretendard-Bold';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 150%;
+  /* identical to box height, or 21px */
+
+  color: #ffffff;
+`;
+
+const DateHMS = styled.span`
+  color: white;
+
+  font-family: 'Pretendard-Light';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 150%;
+  /* identical to box height, or 18px */
+
+  text-align: right;
+
+  color: #ffffff;
+`;
+
+const LogoContainer = styled.div`
+  width: 100px;
+  padding: 20px 10px 20px 120px;
+`;
+
+const Logo = styled.img.attrs({
+  src: `${todaysFailLogo}`,
+  alt: 'todaysFail Logo',
+})`
+  width: 150px;
 `;
