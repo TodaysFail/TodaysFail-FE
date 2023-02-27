@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { useDebounce } from '../../hooks/useDebounce';
 import { ReactComponent as Vector } from '../../assets/Vector.svg';
+import { useDebounce } from '../../hooks/useDebounce';
 
 export default function SignForm({ nickname, setNickname, setIsDuplicated, setWarningMessage }) {
   // 유효성 체크: 영문 소문자와 숫자만 사용 가능하고 최소 길이는 1 최대 길이는 10
@@ -11,7 +11,7 @@ export default function SignForm({ nickname, setNickname, setIsDuplicated, setWa
 
     if (input.length > 10) return false;
 
-    const regex = /^[a-z0-9]{1,10}$/;
+    const regex = /^[a-z0-9ㄱ-ㅎ가-힣]{1,10}$/;
 
     if (regex.test(input)) {
       setNickname(input);
@@ -33,7 +33,7 @@ export default function SignForm({ nickname, setNickname, setIsDuplicated, setWa
     // 서버에 닉네임 중복검사
     const duplicationNicknameAPI = async (nickname) => {
       await axios
-        .get(`https://port-0-todaysfail-be-r8xoo2mlejm1bez.sel3.cloudtype.app:443/api/v1/member/duplicate/${nickname}`)
+        .get(`${process.env.REACT_APP_BASE_URL}/member/duplicate/${nickname}`)
         .then((response) => {
           if (response.data) {
             setWarningMessage('이미 존재하는 닉네임입니다');
@@ -61,7 +61,7 @@ export default function SignForm({ nickname, setNickname, setIsDuplicated, setWa
         value={nickname}
         onChange={checkValidNickname}
       />
-      <NicknameLength>{nickname.length} / 10</NicknameLength>
+      <NicknameLength>{`${nickname.length} / 10`}</NicknameLength>
     </Wrapper>
   );
 }
@@ -69,18 +69,21 @@ export default function SignForm({ nickname, setNickname, setIsDuplicated, setWa
 const Wrapper = styled.div`
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 92px;
+  border-bottom: 1px solid #b8b8b8;
 `;
 const Bullet = styled.span`
-  margin: 0 auto;
+  margin-right: 6px;
 `;
 
 const StyledInput = styled.input`
-  width: 300px;
+  width: 100%;
   height: 24px;
-  left: 36px;
-  top: 457px;
+  margin: 2px 0;
   border: none;
-  font-family: 'Pretendard';
+  font-family: 'Pretendard-Light';
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -95,9 +98,7 @@ const StyledInput = styled.input`
 const NicknameLength = styled.span`
   width: 60px;
   height: 24px;
-  left: 335px;
-  top: 457px;
-  font-family: 'Pretendard';
+  font-family: 'Pretendard-Light';
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
