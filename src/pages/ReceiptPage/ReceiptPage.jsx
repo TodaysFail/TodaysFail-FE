@@ -1,6 +1,5 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import receiptBg from '../../assets/receipt.png';
 import FailCard from '../../components/receipt/FailCard';
@@ -14,7 +13,8 @@ export default function UserSharePage() {
   const [receiptList, setReceiptList] = useState([]);
   const [receiptId, setReceiptId] = useState('');
   const [isVisibleModal, setIsVisibleModal] = useState(false);
-  const url = useParams();
+  const url = document.location.href;
+
   const date = url.split('=')[1];
   const nickname = localStorage.getItem('nickname');
 
