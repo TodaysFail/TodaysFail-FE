@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import Logo from '../../components/common/Logo';
 import DailyFailureList from '../../components/myPage/DailyFailureList';
 import FixedButton from '../../components/myPage/FixedButton';
 import Profile from '../../components/myPage/Profile';
@@ -20,6 +21,9 @@ export default function MyPage() {
 
   return (
     <Container>
+      <LogoContainer>
+        <Logo />
+      </LogoContainer>
       <Main>
         <TodaysDate />
         <Profile />
@@ -32,18 +36,23 @@ export default function MyPage() {
 
 const Container = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 390px;
+  height: 100vh;
+  margin: 0 auto;
+`;
+
+const LogoContainer = styled.div`
+  margin: 26px 0 16px 0;
 `;
 
 const Main = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 390px;
-  /* width: 100%;
-  min-width: 390px; */
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   padding: 0 15px;
-
   font-family: 'Pretendard-Light';
 `;

@@ -6,7 +6,7 @@ import Failure from './Failure';
 export default function DailyFailure({ failures, getRecord }) {
   const navigate = useNavigate();
   const handlePrint = () => {
-    navigate(`/receipt/${'f80fbeef-be03-4ea2-87ab-017fc259e586'}`); // TODO: 각 날짜에 대한 아이디로 바꾸기
+    navigate(`/receipt?date=${failures.date}`); // TODO: 각 날짜에 대한 아이디로 바꾸기
   };
 
   return (
