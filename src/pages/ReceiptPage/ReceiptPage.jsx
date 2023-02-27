@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import receiptBg from '../../assets/receipt.png';
 import FailCard from '../../components/receipt/FailCard';
@@ -13,10 +14,9 @@ export default function UserSharePage() {
   const [receiptList, setReceiptList] = useState([]);
   const [receiptId, setReceiptId] = useState('');
   const [isVisibleModal, setIsVisibleModal] = useState(false);
-  // useParams로 date 따오기
-  // localStroage 닉네임 가져오기
-  const date = '2023-02-27';
-  const nickname = '메이';
+  const url = useParams();
+  const date = url.split('=')[1];
+  const nickname = localStorage.getItem('nickname');
 
   const getReceiptData = async () => {
     await axios
