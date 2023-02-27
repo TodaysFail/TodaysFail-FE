@@ -10,26 +10,49 @@ export default function InputForm({ label, placeholder, maxLength, text, setText
   };
 
   return (
-    <div>
-      <span>{label}</span>
-      <ContentInput
-        onInput={handleResizeHeight}
-        ref={textRef}
-        onChange={(e) => setText(e.target.value)}
-        placeholder={placeholder}
-        maxLength={maxLength}
-      />
-      {text.length} / {maxLength}
-    </div>
+    <Container>
+      <InputContainer>
+        <Label>{label}</Label>
+        <ContentInput
+          onInput={handleResizeHeight}
+          ref={textRef}
+          onChange={(e) => setText(e.target.value)}
+          placeholder={placeholder}
+          maxLength={maxLength}
+        />
+      </InputContainer>
+      <LengthContainer>
+        {text.length} / {maxLength}
+      </LengthContainer>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: baseline;
+
+  width: 100%;
+`;
+
+const InputContainer = styled.div`
+  display: flex;
+`;
+
+const Label = styled.div`
+  font-family: 'Pretendard-Bold';
+  width: 82px;
+  margin-top: 2px;
+`;
 
 const ContentInput = styled.textarea.attrs((props) => ({
   placeholder: props.placeholder,
   rows: '1',
 }))`
   all: unset;
-  width: 241px;
+  /* width: 241px; */
+  width: 100%;
   overflow-wrap: break-word;
   word-break: break-all;
   white-space: pre-wrap;
@@ -45,4 +68,13 @@ const ContentInput = styled.textarea.attrs((props) => ({
   letter-spacing: -0.011em;
 
   color: #000000;
+
+  border-bottom: 1px solid #b8b8b8;
+  margin-bottom: 6px;
+`;
+
+const LengthContainer = styled.div`
+  display: flex;
+  justify-content: end;
+  margin-bottom: 16px;
 `;
