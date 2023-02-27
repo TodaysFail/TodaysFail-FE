@@ -1,7 +1,7 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import axios from 'axios';
 import todaysFailLogo from '../../assets/logo.png';
 import Button from '../../components/record/Button';
 import InputForm from '../../components/record/InputForm';
@@ -51,10 +51,14 @@ export default function RedcordPage() {
   const submitContent = async () => {
     await axios
       .post(`${process.env.REACT_APP_BASE_URL}/record`, {
-        content: '핫케이크를 태웠다. 끝.',
-        feel: '다음에 더 잘하면 된다',
-        title: '핫케이크 태움',
-        writer: '도모',
+        // content: '핫케이크를 태웠다. 끝.',
+        // feel: '다음에 더 잘하면 된다',
+        // title: '핫케이크 태움',
+        // writer: '도모',
+        content: contentText,
+        feel: feelText,
+        title: titleText,
+        writer: localStorage.getItem('nickname'),
       })
       .then((res) => {
         navigate('/');
@@ -64,21 +68,21 @@ export default function RedcordPage() {
 
   return (
     <RecordPageContainer>
-      <LogoContainer>
-        <Logo />
-      </LogoContainer>
+      <Main>
+        <LogoContainer>
+          <Logo />
+        </LogoContainer>
 
-      <RecordPageHeaderContainer>
-        <RecordPageHeaderContent>
-          <RecordPageHeaderTitle>어떤 실패를 경험하셨나요?</RecordPageHeaderTitle>
-          <RecordPageHeaderDate>
-            <DateYMD>{dateYMD}</DateYMD>
-            <DateHMS>{dateHMS}</DateHMS>
-          </RecordPageHeaderDate>
-        </RecordPageHeaderContent>
-      </RecordPageHeaderContainer>
+        <RecordPageHeaderContainer>
+          <RecordPageHeaderContent>
+            <RecordPageHeaderTitle>어떤 실패를 경험하셨나요?</RecordPageHeaderTitle>
+            <RecordPageHeaderDate>
+              <DateYMD>{dateYMD}</DateYMD>
+              <DateHMS>{dateHMS}</DateHMS>
+            </RecordPageHeaderDate>
+          </RecordPageHeaderContent>
+        </RecordPageHeaderContainer>
 
-      <RecordPageInputForm>
         <RecordPageInputContainer>
           <RecordPageInputContent>
             <InputForm
@@ -100,7 +104,7 @@ export default function RedcordPage() {
           </RecordPageInputContent>
           <RecordPageInputContent>
             <InputForm
-              label={'타이틀'}
+              label={'느낀점'}
               placeholder='이번 실패로 얻은 점은 무엇인가요?'
               maxLength='20'
               text={feelText}
@@ -108,53 +112,69 @@ export default function RedcordPage() {
             />
           </RecordPageInputContent>
         </RecordPageInputContainer>
+      </Main>
 
-        <RecordPageButtonContainer>
-          <Button
-            text='취소하기'
-            handleClick={() => {
-              setIsVisibleModal(true);
-            }}
-            type={false}
-          />
-          <Button text='저장하기' handleClick={submitContent} type={true} />
-          {isVisibleModal && <Modal />}
-        </RecordPageButtonContainer>
-      </RecordPageInputForm>
+      <RecordPageButtonContainer>
+        <Button
+          text='취소하기'
+          handleClick={() => {
+            setIsVisibleModal(true);
+          }}
+          type={false}
+        />
+        <Button text='저장하기' handleClick={submitContent} type={true} />
+      </RecordPageButtonContainer>
+      {isVisibleModal && <Modal handleClick={setIsVisibleModal} />}
     </RecordPageContainer>
   );
 }
 
 const RecordPageContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   width: 390px;
-  height: 844px;
+  /* height: 844px; */
+  height: 100vh;
+  padding: 0 15px;
   margin: 0 auto;
-  background: #c4ebd6;
+  background: #ffffff;
+`;
+
+const Main = styled.div`
+  min-height: 572px;
+  /* margin-bottom: 72px; */
 `;
 
 const RecordPageHeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 360px;
+  /* width: 360px; */
+  width: 100%;
   height: 122px;
   background: green;
   background: #000000;
   border-radius: 10px;
-  margin: 10px 10px 10px 15px;
+  /* margin: 10px 10px 10px 15px; */
 `;
 
 const RecordPageInputContainer = styled.div`
   display: flex;
   flex-direction: column;
+  background: #fafafa;
+  border-radius: 10px;
+  padding: 15px;
+  height: 100%;
 `;
 
 const RecordPageButtonContainer = styled.div`
   display: flex;
-`;
+  gap: 10px;
 
-const RecordPageInputForm = styled.form``;
+  width: 100%;
+  margin-bottom: 16px;
+`;
 
 const RecordPageInputContent = styled.div`
   display: flex;
@@ -167,7 +187,8 @@ const RecordPageHeaderContent = styled.div`
 `;
 
 const RecordPageHeaderTitle = styled.h2`
-  width: 390px;
+  /* width: 390px; */
+  width: 100%;
   padding: 8px 10px 0px 79px;
   color: white;
 
