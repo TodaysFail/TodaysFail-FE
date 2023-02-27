@@ -1,20 +1,21 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import codeImg from '../../assets/barcode.svg';
 import receiptBg from '../../assets/share-bg.png';
 import FailCard from '../../components/receipt/FailCard';
 import Logo from '../../components/common/Logo';
-import codeImg from '../../assets/barcode.svg';
 
 export default function SharePage() {
   const [date, setDate] = useState('');
   const [total, setTotal] = useState('');
   const [receiptList, setReceiptList] = useState([]);
-  const receiptId = `f80fbeef-be03-4ea2-87ab-017fc259e586`;
+  const { receiptId } = useParams();
 
   const getReceiptData = async () => {
     await axios
-      .get(`${process.env.REACT_APP_BASE_URL}/api/v1/receipt/${receiptId}`, {
+      .get(`${process.env.REACT_APP_BASE_URL}/receipt/${receiptId}`, {
         headers: {
           'Content-Type': 'application/json',
         },

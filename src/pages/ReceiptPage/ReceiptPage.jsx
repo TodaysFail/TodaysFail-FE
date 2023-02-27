@@ -7,36 +7,57 @@ import CopyModal from '../../components/receipt/CopyModal';
 import Logo from '../../components/common/Logo';
 
 export default function UserSharePage() {
-  const [date, setDate] = useState('');
+  const [data, setData] = useState([]);
+  const [receiptDate, setReceiptDate] = useState('');
   const [total, setTotal] = useState('');
   const [receiptList, setReceiptList] = useState([]);
+  const [receiptId, setReceiptId] = useState('');
   const [isVisibleModal, setIsVisibleModal] = useState(false);
-  const receiptId = `f80fbeef-be03-4ea2-87ab-017fc259e586`;
+  // useParams로 date 따오기
+  // localStroage 닉네임 가져오기
+  const date = '2023-02-27';
+  const nickname = '메이';
 
   const getReceiptData = async () => {
     await axios
-      .get(`${process.env.REACT_APP_BASE_URL}/api/v1/receipt/${receiptId}`, {
+      .get(`${process.env.REACT_APP_BASE_URL}/record?writer=${nickname}`, {
         headers: {
           'Content-Type': 'application/json',
         },
       })
       .then((res) => {
-        setDate(res.data.date);
-        setReceiptList(res.data.receiptList);
-        setTotal(res.data.total);
+        setData(...res.data.filter((i) => i.date === date));
       })
       .catch((res) => {});
   };
 
+  const getReceiptInformation = () => {
+    setReceiptDate(data.receiptDate);
+    setTotal(data.total);
+    setReceiptList(data.records);
+  };
+
   const copyUrl = async () => {
-    await navigator.clipboard.writeText(`${process.env.REACT_APP_BASE_URL}/receipt/${receiptId}`);
+    await axios
+      .post(`${process.env.REACT_APP_BASE_URL}/receipt`, {
+        date: data.date,
+        writer: nickname,
+      })
+      .then((res) => {
+        setReceiptId(res.data);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
+
+    navigator.clipboard.writeText(`${process.env.REACT_APP_BASE_URL}/receipt/${receiptId}`);
   };
 
   useEffect(() => {
     getReceiptData();
-
+    getReceiptInformation();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [data.receiptDate]);
 
   return (
     <Container>
@@ -46,21 +67,22 @@ export default function UserSharePage() {
         <Title>실패 영수증</Title>
         <RecordDateContainer>
           <RecordDateContents>내일은 좀 더 성장할 소중한 경험 내역</RecordDateContents>
-          <RecordDateContents>{date}</RecordDateContents>
+          <RecordDateContents>{receiptDate}</RecordDateContents>
         </RecordDateContainer>
         <TotalFailTitle>Total failure</TotalFailTitle>
         <TotalFailCount>{total}</TotalFailCount>
         <TotalFailContainer>
-          {receiptList.map((receiptList, i) => (
-            <FailCard
-              key={receiptList.id}
-              order={i + 1 < 10 ? `0${i + 1}` : i + 1}
-              title={receiptList.title}
-              content={receiptList.content}
-              feel={receiptList.feel}
-              createdAt={receiptList.createdAt}
-            />
-          ))}
+          {receiptList &&
+            receiptList.map((el, i) => (
+              <FailCard
+                key={el.id}
+                order={i + 1 < 10 ? `0${i + 1}` : i + 1}
+                title={el.title}
+                content={el.content}
+                feel={el.feel}
+                createdAt={el.createdAt}
+              />
+            ))}
         </TotalFailContainer>
       </ReceiptContainer>
       <ShareButton
@@ -71,7 +93,7 @@ export default function UserSharePage() {
       >
         자랑하기
       </ShareButton>
-      {isVisibleModal && <CopyModal setIsVisibleModal={setIsVisibleModal} />}
+      {isVisibleModal && <CopyModal />}
     </Container>
   );
 }
