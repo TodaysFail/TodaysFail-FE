@@ -4,7 +4,7 @@ import styled from 'styled-components';
 // import useOnClickOutside from '../../hooks/useOnClickOutside';
 import Button from './Button';
 
-export default function Modal() {
+export default function Modal({ handleClick }) {
   //   const ref = useRef();
   const navigate = useNavigate();
 
@@ -12,11 +12,17 @@ export default function Modal() {
   //     setModalOpen(false);
   //   });
 
+  const handleClickKeep = () => {
+    handleClick(false);
+  };
+
   return (
     <Container>
       <ModalSection>
-        <MainText>정말 취소하실건가요?</MainText>
-        <SubText>실패를 기록하면 성장할 가능성이 높아져요!</SubText>
+        <Main>
+          <MainText>정말 취소하실건가요?</MainText>
+          <SubText>실패를 기록하면 성장할 가능성이 높아져요!</SubText>
+        </Main>
         <ButtonContainer>
           <Button
             type={false}
@@ -24,7 +30,7 @@ export default function Modal() {
             handleClick={() => navigate('/')}
             size={{ width: '95px', height: '34px' }}
           />
-          <Button type={true} text='계속하기' size={{ width: '95px', height: '34px' }} />
+          <Button handleClick={handleClickKeep} type={true} text='계속하기' size={{ width: '95px', height: '34px' }} />
         </ButtonContainer>
       </ModalSection>
     </Container>
@@ -39,6 +45,12 @@ const Container = styled.div`
   right: 0;
   z-index: 1;
   background-color: rgba(0, 0, 0, 0.4);
+`;
+
+const Main = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
 
 const ModalSection = styled.article`
@@ -57,6 +69,7 @@ const ModalSection = styled.article`
   border: 1px solid #000000;
 
   z-index: 100;
+  gap: 20px;
 `;
 
 const MainText = styled.strong`
@@ -77,4 +90,5 @@ const SubText = styled.p`
 
 const ButtonContainer = styled.div`
   display: flex;
+  gap: 10px;
 `;
