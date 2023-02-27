@@ -1,11 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 import todaysFailLogo from '../../assets/logo.png';
+import Button from '../../components/record/Button';
 import InputForm from '../../components/record/InputForm';
+import Modal from '../../components/record/Modal';
 
 export default function RedcordPage() {
   const [dateYMD, setDateYMD] = useState('2023-01-01');
   const [dateHMS, setDateHMS] = useState('00:00:00');
+  const [titleText, setTitleText] = useState('');
+  const [contentText, setContentText] = useState('');
+  const [feelText, setFeelText] = useState('');
+
+  // 모달 오픈 체크 상태
+  const [isVisibleModal, setIsVisibleModal] = useState(false);
+  // const [modalOpen, setModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     checkCurrentTime();
@@ -28,7 +40,27 @@ export default function RedcordPage() {
     setInterval(checkCurrentTime, 1000);
   };
 
+  // const openModal = () => {
+  //   setModalOpen(true);
+  // };
+
   timer();
+
+  // localStorage.getItem('nickname', nickname);
+
+  const submitContent = async () => {
+    await axios
+      .post(`${process.env.REACT_APP_BASE_URL}/record`, {
+        content: '핫케이크를 태웠다. 끝.',
+        feel: '다음에 더 잘하면 된다',
+        title: '핫케이크 태움',
+        writer: '도모',
+      })
+      .then((res) => {
+        navigate('/');
+      })
+      .catch((res) => {});
+  };
 
   return (
     <RecordPageContainer>
@@ -46,17 +78,49 @@ export default function RedcordPage() {
         </RecordPageHeaderContent>
       </RecordPageHeaderContainer>
 
-      <RecordPageInputContainer>
-        <RecordPageInputContent>
-          <InputForm label={'제목'} placeholder='어떤 실패를 하셨나요?' maxLength='17' />
-        </RecordPageInputContent>
-        <RecordPageInputContent>
-          <InputForm label={'내용'} placeholder='자세하게 알려주세요!' maxLength='300' />
-        </RecordPageInputContent>
-        <RecordPageInputContent>
-          <InputForm label={'타이틀'} placeholder='이번 실패로 얻은 점은 무엇인가요?' maxLength='20' />
-        </RecordPageInputContent>
-      </RecordPageInputContainer>
+      <RecordPageInputForm>
+        <RecordPageInputContainer>
+          <RecordPageInputContent>
+            <InputForm
+              label={'제목'}
+              placeholder='어떤 실패를 하셨나요?'
+              maxLength='17'
+              text={titleText}
+              setText={setTitleText}
+            />
+          </RecordPageInputContent>
+          <RecordPageInputContent>
+            <InputForm
+              label={'내용'}
+              placeholder='자세하게 알려주세요!'
+              maxLength='300'
+              text={contentText}
+              setText={setContentText}
+            />
+          </RecordPageInputContent>
+          <RecordPageInputContent>
+            <InputForm
+              label={'타이틀'}
+              placeholder='이번 실패로 얻은 점은 무엇인가요?'
+              maxLength='20'
+              text={feelText}
+              setText={setFeelText}
+            />
+          </RecordPageInputContent>
+        </RecordPageInputContainer>
+
+        <RecordPageButtonContainer>
+          <Button
+            text='취소하기'
+            handleClick={() => {
+              setIsVisibleModal(true);
+            }}
+            type={false}
+          />
+          <Button text='저장하기' handleClick={submitContent} type={true} />
+          {isVisibleModal && <Modal />}
+        </RecordPageButtonContainer>
+      </RecordPageInputForm>
     </RecordPageContainer>
   );
 }
@@ -85,6 +149,12 @@ const RecordPageInputContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+const RecordPageButtonContainer = styled.div`
+  display: flex;
+`;
+
+const RecordPageInputForm = styled.form``;
 
 const RecordPageInputContent = styled.div`
   display: flex;

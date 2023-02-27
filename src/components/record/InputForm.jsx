@@ -1,8 +1,7 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import styled from 'styled-components';
 
-export default function InputForm({ label, placeholder, maxLength }) {
-  const [text, setText] = useState('');
+export default function InputForm({ label, placeholder, maxLength, text, setText }) {
   const textRef = useRef(null);
 
   const handleResizeHeight = () => {
