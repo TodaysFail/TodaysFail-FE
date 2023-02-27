@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import todaysFailLogo from '../../assets/logo.png';
+import InputForm from '../../components/record/InputForm';
 
 export default function RedcordPage() {
   const [dateYMD, setDateYMD] = useState('2023-01-01');
@@ -30,24 +31,37 @@ export default function RedcordPage() {
   timer();
 
   return (
-    <RedcordPageContainer>
+    <RecordPageContainer>
       <LogoContainer>
         <Logo />
       </LogoContainer>
-      <RedcordPageHeaderContainer>
-        <RedcordPageHeaderContent>
-          <RedcordPageHeaderTitle>어떤 실패를 경험하셨나요?</RedcordPageHeaderTitle>
-          <RedcordPageHeaderDate>
+
+      <RecordPageHeaderContainer>
+        <RecordPageHeaderContent>
+          <RecordPageHeaderTitle>어떤 실패를 경험하셨나요?</RecordPageHeaderTitle>
+          <RecordPageHeaderDate>
             <DateYMD>{dateYMD}</DateYMD>
             <DateHMS>{dateHMS}</DateHMS>
-          </RedcordPageHeaderDate>
-        </RedcordPageHeaderContent>
-      </RedcordPageHeaderContainer>
-    </RedcordPageContainer>
+          </RecordPageHeaderDate>
+        </RecordPageHeaderContent>
+      </RecordPageHeaderContainer>
+
+      <RecordPageInputContainer>
+        <RecordPageInputContent>
+          <InputForm label={'제목'} placeholder='어떤 실패를 하셨나요?' maxLength='17' />
+        </RecordPageInputContent>
+        <RecordPageInputContent>
+          <InputForm label={'내용'} placeholder='자세하게 알려주세요!' maxLength='300' />
+        </RecordPageInputContent>
+        <RecordPageInputContent>
+          <InputForm label={'타이틀'} placeholder='이번 실패로 얻은 점은 무엇인가요?' maxLength='20' />
+        </RecordPageInputContent>
+      </RecordPageInputContainer>
+    </RecordPageContainer>
   );
 }
 
-const RedcordPageContainer = styled.div`
+const RecordPageContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 390px;
@@ -56,7 +70,7 @@ const RedcordPageContainer = styled.div`
   background: #c4ebd6;
 `;
 
-const RedcordPageHeaderContainer = styled.div`
+const RecordPageHeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 360px;
@@ -67,12 +81,22 @@ const RedcordPageHeaderContainer = styled.div`
   margin: 10px 10px 10px 15px;
 `;
 
-const RedcordPageHeaderContent = styled.div`
+const RecordPageInputContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-const RedcordPageHeaderTitle = styled.h2`
+const RecordPageInputContent = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const RecordPageHeaderContent = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const RecordPageHeaderTitle = styled.h2`
   width: 390px;
   padding: 8px 10px 0px 79px;
   color: white;
@@ -91,7 +115,7 @@ const RedcordPageHeaderTitle = styled.h2`
   color: #ffffff;
 `;
 
-const RedcordPageHeaderDate = styled.div`
+const RecordPageHeaderDate = styled.div`
   display: flex;
   width: 330px;
   justify-content: flex-start;
