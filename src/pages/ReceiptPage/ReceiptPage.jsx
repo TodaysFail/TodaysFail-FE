@@ -48,7 +48,7 @@ export default function UserSharePage() {
       })
       .catch((res) => {});
 
-    navigator.clipboard.writeText(`${process.env.REACT_APP_BASE_URL}/receipt/${receiptId}`);
+    navigator.clipboard.writeText(`https://todaysfail.com/receipt/${receiptId}`);
   };
 
   useEffect(() => {
