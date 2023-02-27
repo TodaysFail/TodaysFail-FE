@@ -1,9 +1,9 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import MyPage from '../pages/MyPage/MyPage';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LoginPage from '../pages/LoginPage/LoginPage';
-import RecordPage from '../pages/RecordPage/RedcordPage';
+import MyPage from '../pages/MyPage/MyPage';
 import ReceiptPage from '../pages/ReceiptPage/ReceiptPage';
+import RecordPage from '../pages/RecordPage/RecordPage';
 import SharePage from '../pages/SharePage/SharePage';
 
 export default function Router() {
