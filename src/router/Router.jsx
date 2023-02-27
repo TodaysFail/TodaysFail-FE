@@ -1,9 +1,10 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import MyPage from '../pages/MyPage/MyPage';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import LoginPage from '../pages/LoginPage/LoginPage';
+import MyPage from '../pages/MyPage/MyPage';
+import ReceiptPage from '../pages/ReceiptPage/ReceiptPage';
 import RecordPage from '../pages/RecordPage/RecordPage';
-import UserSharePage from '../pages/UserSharePage/UserSharePage';
+import SharePage from '../pages/SharePage/SharePage';
 
 export default function Router() {
   return (
@@ -12,7 +13,8 @@ export default function Router() {
         <Route path='/' element={<MyPage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/recordPage' element={<RecordPage />} />
-        <Route path='/share' element={<UserSharePage />} />
+        <Route path='/receipt' element={<ReceiptPage />} />
+        <Route path='/receipt/:receiptId' element={<SharePage />} />
       </Routes>
     </BrowserRouter>
   );
