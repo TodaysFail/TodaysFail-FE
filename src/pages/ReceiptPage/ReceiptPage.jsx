@@ -46,9 +46,7 @@ export default function UserSharePage() {
       .then((res) => {
         setReceiptId(res.data);
       })
-      .catch((res) => {
-        console.log(res);
-      });
+      .catch((res) => {});
 
     navigator.clipboard.writeText(`${process.env.REACT_APP_BASE_URL}/receipt/${receiptId}`);
   };
