@@ -14,7 +14,11 @@ export default function SharePage() {
 
   const getReceiptData = async () => {
     await axios
-      .get(`https://todaysfail.com/api/v1/receipt/${receiptId}`)
+      .get(`${process.env.REACT_APP_BASE_URL}/api/v1/receipt/${receiptId}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then((res) => {
         setDate(res.data.date);
         setReceiptList(res.data.receiptList);

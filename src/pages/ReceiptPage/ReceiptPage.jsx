@@ -15,7 +15,11 @@ export default function UserSharePage() {
 
   const getReceiptData = async () => {
     await axios
-      .get(`https://todaysfail.com/api/v1/receipt/${receiptId}`)
+      .get(`${process.env.REACT_APP_BASE_URL}/api/v1/receipt/${receiptId}`, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
       .then((res) => {
         setDate(res.data.date);
         setReceiptList(res.data.receiptList);
@@ -24,8 +28,8 @@ export default function UserSharePage() {
       .catch((res) => {});
   };
 
-  const CopyUrl = async () => {
-    await navigator.clipboard.writeText(`https://todaysfail.com/receipt/${receiptId}`);
+  const copyUrl = async () => {
+    await navigator.clipboard.writeText(`${process.env.REACT_APP_BASE_URL}/receipt/${receiptId}`);
   };
 
   useEffect(() => {
@@ -61,7 +65,7 @@ export default function UserSharePage() {
       </ReceiptContainer>
       <ShareButton
         onClick={() => {
-          CopyUrl();
+          copyUrl();
           setIsVisibleModal(true);
         }}
       >
