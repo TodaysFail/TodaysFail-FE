@@ -150,6 +150,7 @@ const Main = styled.div`
 const RecordPageHeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   /* width: 360px; */
   width: 100%;
   height: 122px;
@@ -203,7 +204,7 @@ const RecordPageHeaderTitle = styled.h2`
 
   /* white */
 
-  color: #ffffff;
+  margin-bottom: 16px;
 `;
 
 const RecordPageHeaderDate = styled.div`
