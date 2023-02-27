@@ -41,6 +41,7 @@ const Container = styled.div`
   width: 390px;
   height: 100vh;
   margin: 0 auto;
+  background-color: white;
 `;
 
 const LogoContainer = styled.div`
