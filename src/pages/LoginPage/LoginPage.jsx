@@ -73,6 +73,7 @@ const LoginContainer = styled.div`
   height: 100vh;
   padding: 0 15px;
   margin: 0 auto;
+  background-color: #ffffff;
 `;
 
 const Main = styled.div`
