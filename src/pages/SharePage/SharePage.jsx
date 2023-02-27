@@ -21,6 +21,7 @@ export default function SharePage() {
         },
       })
       .then((res) => {
+        console.log(res.data);
         setDate(res.data.date);
         setReceiptList(res.data.receiptList);
         setTotal(res.data.total);

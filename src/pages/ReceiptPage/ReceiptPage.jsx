@@ -91,7 +91,7 @@ export default function UserSharePage() {
       >
         자랑하기
       </ShareButton>
-      {isVisibleModal && <CopyModal />}
+      {isVisibleModal && <CopyModal receiptId={receiptId} />}
     </Container>
   );
 }
