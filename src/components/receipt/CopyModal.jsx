@@ -1,9 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-export default function CopyModal() {
+export default function CopyModal({ receiptId }) {
   const navigate = useNavigate();
-  const receiptId = `f80fbeef-be03-4ea2-87ab-017fc259e586`;
 
   return (
     <Container>
