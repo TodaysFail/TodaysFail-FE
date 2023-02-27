@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import bg from '../assets/background.svg';
 
 const GlobalStyle = createGlobalStyle`
   .sr-only {
@@ -18,6 +19,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'suit variable', sans-serif;
     margin:0;
     padding:0;
+    background-image: url(${bg});
   }
 
   a {
