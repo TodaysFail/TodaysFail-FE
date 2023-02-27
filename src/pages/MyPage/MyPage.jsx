@@ -39,7 +39,8 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   width: 390px;
-  height: 100vh;
+  /* height: 100vh; */
+  height: 100%;
   margin: 0 auto;
   background-color: white;
 `;
