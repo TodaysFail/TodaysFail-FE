@@ -44,11 +44,10 @@ export default function UserSharePage() {
         writer: nickname,
       })
       .then((res) => {
+        navigator.clipboard.writeText(`https://todaysfail.com/receipt/${res.data}`);
         setReceiptId(res.data);
       })
       .catch((res) => {});
-
-    navigator.clipboard.writeText(`https://todaysfail.com/receipt/${receiptId}`);
   };
 
   useEffect(() => {
