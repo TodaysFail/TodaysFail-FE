@@ -70,16 +70,19 @@ export default function UserSharePage() {
         <TotalFailCount>{total}</TotalFailCount>
         <TotalFailContainer>
           {receiptList &&
-            receiptList.map((el, i) => (
-              <FailCard
-                key={el.id}
-                order={i + 1 < 10 ? `0${i + 1}` : i + 1}
-                title={el.title}
-                content={el.content}
-                feel={el.feel}
-                createdAt={el.createdAt}
-              />
-            ))}
+            receiptList
+              .slice(0)
+              .reverse()
+              .map((el, i) => (
+                <FailCard
+                  key={el.id}
+                  order={i + 1 < 10 ? `0${i + 1}` : i + 1}
+                  title={el.title}
+                  content={el.content}
+                  feel={el.feel}
+                  createdAt={el.createdAt}
+                />
+              ))}
         </TotalFailContainer>
       </ReceiptContainer>
       <ShareButton
