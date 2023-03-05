@@ -37,15 +37,22 @@ export default function MyPage() {
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  width: 390px;
+  width: 100%;
   height: 100vh;
   margin: 0 auto;
   background-color: white;
+  overflow: scroll;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const LogoContainer = styled.div`
   margin: 26px 0 16px 0;
+  height: 100%;
 `;
 
 const Main = styled.div`
