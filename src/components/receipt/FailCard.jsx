@@ -31,10 +31,12 @@ const Number = styled.p`
   width: 27px;
   height: 18px;
   margin-right: 8px;
-  padding-top: 4px;
+  padding: 2px 6px;
   font-size: 9px;
   font-weight: 400;
+  line-height: 150%;
   text-align: center;
+  letter-spacing: -0.011em;
   background-color: #1e1e1e;
   color: #ffffff;
   border-radius: 50%;
