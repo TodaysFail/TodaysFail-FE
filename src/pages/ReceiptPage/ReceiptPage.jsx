@@ -174,6 +174,8 @@ const TotalFailCount = styled.span`
 `;
 
 const ShareButton = styled.button`
+  position: fixed;
+  bottom: 16px;
   width: 145px;
   height: 45px;
   margin-top: 30px;
