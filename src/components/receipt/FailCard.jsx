@@ -28,7 +28,7 @@ const Conatiner = styled.div`
 `;
 
 const Number = styled.p`
-  width: 27px;
+  width: 29px;
   height: 18px;
   margin-right: 8px;
   padding: 2px 6px;
