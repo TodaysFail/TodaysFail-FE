@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
     margin:0;
     padding:0;
     background-image: url(${bg});
-
+    
     height: 100vh;
   }
 

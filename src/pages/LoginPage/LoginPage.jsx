@@ -69,7 +69,7 @@ const LoginContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 390px;
+  width: 100%;
   height: 100vh;
   padding: 0 15px;
   margin: 0 auto;

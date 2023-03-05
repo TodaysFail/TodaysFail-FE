@@ -2,9 +2,9 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import receiptBg from '../../assets/receipt.png';
-import FailCard from '../../components/receipt/FailCard';
-import CopyModal from '../../components/receipt/CopyModal';
 import Logo from '../../components/common/Logo';
+import CopyModal from '../../components/receipt/CopyModal';
+import FailCard from '../../components/receipt/FailCard';
 
 export default function UserSharePage() {
   const [data, setData] = useState([]);
@@ -100,8 +100,9 @@ export default function UserSharePage() {
 
 const Container = styled.section`
   background-color: #ffffff;
-  width: 390px;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
   margin: 0 auto;
   padding: 26px 17px;
   display: flex;
