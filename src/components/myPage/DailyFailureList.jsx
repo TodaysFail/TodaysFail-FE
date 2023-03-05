@@ -47,10 +47,6 @@ export default function DailyFailureList({ nickname }) {
 const ListContainer = styled.div`
   width: 100%;
   height: calc(100vh - 320px);
-  overflow-y: scroll;
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 const List = styled.div`
