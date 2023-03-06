@@ -4,17 +4,11 @@ import GlobalStyle from './style/GlobalStyle';
 
 function App() {
   return (
-    <Root className='App'>
+    <div className='App'>
       <GlobalStyle />
       <Router />
-    </Root>
+    </div>
   );
 }
-
-const Root = styled.div`
-  max-width: 390px;
-  min-height: 100vh;
-  margin: 0 auto;
-`;
 
 export default App;
