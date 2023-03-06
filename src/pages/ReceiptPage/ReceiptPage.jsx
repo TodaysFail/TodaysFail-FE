@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import receiptBg from '../../assets/receipt.png';
 import Logo from '../../components/common/Logo';
-import CopyModal from '../../components/receipt/CopyModal';
 import Modal from '../../components/common/Modal';
 import FailCard from '../../components/receipt/FailCard';
 import Button from '../../components/common/Button';
