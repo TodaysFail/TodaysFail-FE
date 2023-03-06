@@ -1,7 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Button from './Button';
+// import Button from './Button';
 import Failure from './Failure';
+import Button from '../common/Button';
 
 export default function DailyFailure({ failures, getRecord }) {
   const navigate = useNavigate();
@@ -13,7 +14,12 @@ export default function DailyFailure({ failures, getRecord }) {
     <div>
       <DailyHeader>
         <FailureDate>{failures.date}</FailureDate>
-        <Button name={'영수증 뽑기'} handleClick={handlePrint} />
+        {/* <Button name={'영수증 뽑기'} handleClick={handlePrint} /> */}
+        <Button
+          type={{ bgColor: 'white', width: '104', fontSize: '14', isHover: 'true' }}
+          text={'영수증 뽑기'}
+          handleClick={handlePrint}
+        />
       </DailyHeader>
       <FailuresContainer>
         {failures.records.map((failure, idx) => (

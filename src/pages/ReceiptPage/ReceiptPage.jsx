@@ -1,10 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import receiptBg from '../../assets/receipt.png';
 import Logo from '../../components/common/Logo';
 import CopyModal from '../../components/receipt/CopyModal';
+import Modal from '../../components/common/Modal';
 import FailCard from '../../components/receipt/FailCard';
+import Button from '../../components/common/Button';
 
 export default function UserSharePage() {
   const [data, setData] = useState([]);
@@ -14,7 +17,7 @@ export default function UserSharePage() {
   const [receiptId, setReceiptId] = useState('');
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const url = document.location.href;
-
+  const navigate = useNavigate();
   const date = url.split('=')[1];
   const nickname = localStorage.getItem('nickname');
 
@@ -93,7 +96,17 @@ export default function UserSharePage() {
       >
         자랑하기
       </ShareButton>
-      {isVisibleModal && <CopyModal receiptId={receiptId} />}
+      {isVisibleModal && (
+        <Modal mainText={'주소가 복사되었습니다'} subText={'오늘의 실패를  부담없이 공유해보세요!'}>
+          <Button
+            type={{ bgColor: 'black', width: '95', fontSize: '16' }}
+            text={'그럴게요'}
+            handleClick={() => {
+              navigate(`/receipt/${receiptId}`);
+            }}
+          />
+        </Modal>
+      )}
     </Container>
   );
 }
