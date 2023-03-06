@@ -166,7 +166,7 @@ const RecordPageInputContainer = styled.div`
   background: #fafafa;
   border-radius: 10px;
   padding: 15px;
-  height: 100%;
+  height: 79%;
 `;
 
 const RecordPageButtonContainer = styled.div`
@@ -235,7 +235,7 @@ const DateYMD = styled.span`
 
 const DateHMS = styled.span`
   color: white;
-
+  padding: 1.7px 0px 0px 0px;
   font-family: 'Pretendard-Light';
   font-style: normal;
   font-weight: 400;
