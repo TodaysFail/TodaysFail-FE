@@ -4,8 +4,8 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import codeImg from '../../assets/barcode.svg';
 import receiptBg from '../../assets/share-bg.png';
-import FailCard from '../../components/receipt/FailCard';
 import Logo from '../../components/common/Logo';
+import FailCard from '../../components/receipt/FailCard';
 
 export default function SharePage() {
   const [date, setDate] = useState('');
@@ -67,7 +67,7 @@ export default function SharePage() {
 
 const Container = styled.section`
   background-color: #ffffff;
-  width: 390px;
+  width: 100%;
   height: 100vh;
   margin: 0 auto;
   padding: 26px 17px;

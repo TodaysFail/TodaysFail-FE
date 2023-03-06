@@ -20,6 +20,8 @@ const GlobalStyle = createGlobalStyle`
     margin:0;
     padding:0;
     background-image: url(${bg});
+    
+    height: 100vh;
   }
 
   a {
@@ -31,6 +33,7 @@ const GlobalStyle = createGlobalStyle`
     background: inherit;
     outline: none;
     padding: 0;
+    color: black;
   }
 
   h1,h2,h3, p, span{
