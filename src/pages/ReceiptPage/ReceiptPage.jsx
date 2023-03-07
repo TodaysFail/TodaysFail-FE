@@ -2,8 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import receiptBg from '../../assets/receipt.png';
-import Logo from '../../components/common/Logo';
+import receiptBg from '../../assets/receipt-bg.svg';
 import Modal from '../../components/common/Modal';
 import FailCard from '../../components/receipt/FailCard';
 import Button from '../../components/common/Button';
@@ -61,7 +60,6 @@ export default function UserSharePage() {
   return (
     <Container>
       <h1 className='sr-only'>나의 영수증 공유 페이지</h1>
-      <Logo />
       <ReceiptContainer>
         <Title>실패 영수증</Title>
         <RecordDateContainer>
@@ -111,12 +109,9 @@ export default function UserSharePage() {
 }
 
 const Container = styled.section`
-  background-color: #ffffff;
   width: 100%;
-  height: 100%;
-  min-height: 100vh;
   margin: 0 auto;
-  padding: 26px 17px;
+  padding: 19px 15px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -126,8 +121,7 @@ const ReceiptContainer = styled.section`
   position: relative;
 
   width: 360px;
-  height: 665px;
-  margin-top: 20px;
+  height: 613px;
   padding: 0 15px;
   background-image: url(${receiptBg});
   font-family: 'Galmuri11';
@@ -157,7 +151,7 @@ const RecordDateContents = styled.p`
 
 const TotalFailContainer = styled.section`
   width: 330px;
-  height: 415px;
+  height: 355px;
   margin-top: 14px;
   position: relative;
   display: flex;
