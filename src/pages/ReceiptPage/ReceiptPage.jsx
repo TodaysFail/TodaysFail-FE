@@ -20,35 +20,26 @@ export default function UserSharePage() {
   const nickname = localStorage.getItem('nickname');
 
   const getReceiptData = async () => {
-    await axios
-      .get(`${process.env.REACT_APP_BASE_URL}/record?writer=${nickname}`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then((res) => {
-        setData(...res.data.filter((i) => i.date === date));
-      })
-      .catch((res) => {});
+    const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/record?writer=${nickname}`);
+
+    return setData(...data.filter((i) => i.date === date));
+  };
+
+  const copyUrl = async () => {
+    const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/receipt`, {
+      date: data.date,
+      writer: nickname,
+    });
+
+    navigator.clipboard.writeText(`https://todaysfail.com/receipt/${res.data}`);
+
+    return setReceiptId(res.data);
   };
 
   const getReceiptInformation = () => {
     setReceiptDate(data.receiptDate);
     setTotal(data.total);
     setReceiptList(data.records);
-  };
-
-  const copyUrl = async () => {
-    await axios
-      .post(`${process.env.REACT_APP_BASE_URL}/receipt`, {
-        date: data.date,
-        writer: nickname,
-      })
-      .then((res) => {
-        navigator.clipboard.writeText(`https://todaysfail.com/receipt/${res.data}`);
-        setReceiptId(res.data);
-      })
-      .catch((res) => {});
   };
 
   useEffect(() => {
