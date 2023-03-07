@@ -34,7 +34,7 @@ export default function ReceiptContainer() {
     <Container>
       <Title>실패 영수증</Title>
       <RecordDateCard date={receiptDate} />
-      <FailureList data={data} failureList={receiptList} />
+      <FailureList total={data.total} failureList={receiptList && receiptList.slice(0).reverse()} />
     </Container>
   );
 }

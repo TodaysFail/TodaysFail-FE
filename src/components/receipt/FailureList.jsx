@@ -1,26 +1,23 @@
 import styled from 'styled-components';
 import FailureCard from './FailureCard';
 
-export default function FailureList({ data, failureList }) {
+export default function FailureList({ total, failureList }) {
   return (
     <>
       <TotalFailTitle>Total failure</TotalFailTitle>
-      <TotalFailCount>{data.total}</TotalFailCount>
+      <TotalFailCount>{total}</TotalFailCount>
       <TotalFailContainer>
         {failureList &&
-          failureList
-            .slice(0)
-            .reverse()
-            .map((el, i) => (
-              <FailureCard
-                key={el.id}
-                order={i + 1 < 10 ? `0${i + 1}` : i + 1}
-                title={el.title}
-                content={el.content}
-                feel={el.feel}
-                createdAt={el.createdAt}
-              />
-            ))}
+          failureList.map((el, i) => (
+            <FailureCard
+              key={el.id}
+              order={i + 1 < 10 ? `0${i + 1}` : i + 1}
+              title={el.title}
+              content={el.content}
+              feel={el.feel}
+              createdAt={el.createdAt}
+            />
+          ))}
       </TotalFailContainer>
     </>
   );
