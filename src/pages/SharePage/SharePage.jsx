@@ -14,18 +14,13 @@ export default function SharePage() {
   const { receiptId } = useParams();
 
   const getReceiptData = async () => {
-    await axios
-      .get(`${process.env.REACT_APP_BASE_URL}/receipt/${receiptId}`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
-      .then((res) => {
-        setDate(res.data.date);
-        setReceiptList(res.data.receiptList);
-        setTotal(res.data.total);
-      })
-      .catch((res) => {});
+    const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/receipt/${receiptId}`);
+
+    setDate(data.date);
+    setReceiptList(data.receiptList);
+    setTotal(data.total);
+
+    return data;
   };
 
   useEffect(() => {
