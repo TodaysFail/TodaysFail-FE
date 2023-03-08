@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import Logo from '../../components/common/Logo';
+import Button from '../../components/common/Button';
 import DailyFailureList from '../../components/myPage/DailyFailureList';
-import FixedButton from '../../components/myPage/FixedButton';
 import Profile from '../../components/myPage/Profile';
 import TodaysDate from '../../components/myPage/TodaysDate';
 
@@ -19,16 +18,20 @@ export default function MyPage() {
     navigate('/recordPage');
   };
 
+  const buttonType = {
+    bgColor: 'black',
+    width: '143',
+    fontSize: '16',
+    isFixed: true,
+  };
+
   return (
     <Container>
-      <LogoContainer>
-        <Logo />
-      </LogoContainer>
       <Main>
         <TodaysDate />
         <Profile />
         <DailyFailureList nickname={nickname} />
-        <FixedButton handleClick={handleClick} name={'기록하기'} />
+        <Button type={buttonType} handleClick={handleClick} text={'기록하기'} />
       </Main>
     </Container>
   );
@@ -44,15 +47,11 @@ const Container = styled.div`
   margin: 0 auto;
   background-color: white;
   overflow: scroll;
+  padding-top: 16px;
 
   ::-webkit-scrollbar {
     display: none;
   }
-`;
-
-const LogoContainer = styled.div`
-  margin: 26px 0 16px 0;
-  height: 100%;
 `;
 
 const Main = styled.div`
