@@ -1,7 +1,7 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from '../../api/apiController';
 import codeImg from '../../assets/barcode.svg';
 import receiptBg from '../../assets/share-bg.png';
 import FailureList from './FailureList';
@@ -14,7 +14,7 @@ export default function ReceiptShareContainer() {
   const { receiptId } = useParams();
 
   const getReceiptData = async () => {
-    const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/receipt/${receiptId}`);
+    const { data } = await axios.get(`/receipt/${receiptId}`);
 
     setDate(data.date);
     setReceiptList(data.receiptList);

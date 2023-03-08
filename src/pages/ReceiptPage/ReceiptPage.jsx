@@ -1,7 +1,7 @@
-import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from '../../api/apiController';
 import Modal from '../../components/common/Modal';
 import Button from '../../components/common/Button';
 import ReceiptContainer from '../../components/receipt/ReceiptContainer';
@@ -29,7 +29,7 @@ export default function UserSharePage() {
   };
 
   const copyUrl = async () => {
-    const res = await axios.post(`${process.env.REACT_APP_BASE_URL}/receipt`, {
+    const res = await axios.post(`/receipt`, {
       date,
       writer: nickname,
     });

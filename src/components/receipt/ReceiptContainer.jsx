@@ -1,6 +1,6 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import axios from '../../api/apiController';
 import receiptBg from '../../assets/receipt-bg.svg';
 import FailureList from './FailureList';
 import RecordDateCard from './RecordDateCard';
@@ -14,7 +14,7 @@ export default function ReceiptContainer() {
   const nickname = localStorage.getItem('nickname');
 
   const getReceiptData = async () => {
-    const { data } = await axios.get(`${process.env.REACT_APP_BASE_URL}/record?writer=${nickname}`);
+    const { data } = await axios.get(`/record?writer=${nickname}`);
 
     return setData(...data.filter((i) => i.date === date));
   };
