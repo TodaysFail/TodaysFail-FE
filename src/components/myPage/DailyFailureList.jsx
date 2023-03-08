@@ -1,7 +1,8 @@
-import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from '../../api/apiController';
+
 import DailyFailure from './DailyFailure';
 import NoFailures from './NoFailures';
 
@@ -11,11 +12,7 @@ export default function DailyFailureList({ nickname }) {
 
   const getRecord = useCallback(() => {
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/record?writer=${nickname}`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(`/record?writer=${nickname}`)
       .then((res) => {
         setDailyFailures(res.data);
       })

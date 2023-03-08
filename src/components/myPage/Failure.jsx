@@ -1,14 +1,12 @@
-import axios from 'axios';
 import styled from 'styled-components';
+import axios from '../../api/apiController';
 import { ReactComponent as DeleteIcon } from '../../assets/delete.svg';
 import { ReactComponent as StarIcon } from '../../assets/star_icon.svg';
 
 export default function Failure({ failure, getRecord, num }) {
   const handleDelete = () => {
     axios
-      .delete(
-        `${process.env.REACT_APP_BASE_URL}/record?writer=${localStorage.getItem('nickname')}&recordId=${failure.id}`,
-      )
+      .delete(`/record?writer=${localStorage.getItem('nickname')}&recordId=${failure.id}`)
       .then(() => {
         getRecord();
       })
