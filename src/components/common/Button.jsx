@@ -26,6 +26,7 @@ const StyledButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+  line-height: 140%;
 
   :hover {
     background: ${(props) => props.type.isHover && 'black'};

@@ -1,16 +1,18 @@
-import axios from 'axios';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+import { deleteRecord } from '../../actions/recordListActions';
+import axios from '../../api/apiController';
 import { ReactComponent as DeleteIcon } from '../../assets/delete.svg';
 import { ReactComponent as StarIcon } from '../../assets/star_icon.svg';
 
 export default function Failure({ failure, getRecord, num }) {
+  const dispatch = useDispatch();
+
   const handleDelete = () => {
     axios
-      .delete(
-        `${process.env.REACT_APP_BASE_URL}/record?writer=${localStorage.getItem('nickname')}&recordId=${failure.id}`,
-      )
+      .delete(`/record?writer=${localStorage.getItem('nickname')}&recordId=${failure.id}`)
       .then(() => {
-        getRecord();
+        dispatch(deleteRecord(failure.id));
       })
       .catch(() => {
         // TODO: 에러 처리

@@ -1,37 +1,36 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-// import Button from './Button';
-import Failure from './Failure';
 import Button from '../common/Button';
+import Failure from './Failure';
 
-export default function DailyFailure({ failures, getRecord }) {
+export default function DailyFailure({ failures }) {
   const navigate = useNavigate();
   const handlePrint = () => {
-    navigate(`/receipt?date=${failures.date}`); // TODO: 각 날짜에 대한 아이디로 바꾸기
+    navigate(`/receipt?date=${failures.date}`);
   };
 
   return (
-    <div>
-      <DailyHeader>
-        <FailureDate>{failures.date}</FailureDate>
-        {/* <Button name={'영수증 뽑기'} handleClick={handlePrint} /> */}
-        <Button
-          type={{ bgColor: 'white', width: '104', fontSize: '14', isHover: 'true' }}
-          text={'영수증 뽑기'}
-          handleClick={handlePrint}
-        />
-      </DailyHeader>
-      <FailuresContainer>
-        {failures.records.map((failure, idx) => (
-          <Failure
-            key={failure.id}
-            failure={failure}
-            getRecord={getRecord}
-            num={String(failures.records.length - idx)}
-          />
-        ))}
-      </FailuresContainer>
-    </div>
+    <>
+      {failures.records.length ? (
+        <div>
+          <DailyHeader>
+            <FailureDate>{failures.date}</FailureDate>
+            <Button
+              type={{ bgColor: 'white', width: '104', fontSize: '14', isHover: 'true' }}
+              text={'영수증 뽑기'}
+              handleClick={handlePrint}
+            />
+          </DailyHeader>
+          <FailuresContainer>
+            {failures.records.map((failure, idx) => (
+              <Failure key={failure.id} failure={failure} num={String(failures.records.length - idx)} />
+            ))}
+          </FailuresContainer>
+        </div>
+      ) : (
+        <div></div>
+      )}
+    </>
   );
 }
 

@@ -1,29 +1,29 @@
-import axios from 'axios';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { setRecordList } from '../../actions/recordListActions';
+import axios from '../../api/apiController';
 import DailyFailure from './DailyFailure';
 import NoFailures from './NoFailures';
 
 export default function DailyFailureList({ nickname }) {
-  const [dailyFailures, setDailyFailures] = useState([]);
+  const dispatch = useDispatch();
+  const { recordList } = useSelector((state) => state.record);
+
   const navigate = useNavigate();
 
   const getRecord = useCallback(() => {
     axios
-      .get(`${process.env.REACT_APP_BASE_URL}/record?writer=${nickname}`, {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      })
+      .get(`/record?writer=${nickname}`)
       .then((res) => {
-        setDailyFailures(res.data);
+        dispatch(setRecordList(res.data));
       })
       .catch(() => {
         localStorage.removeItem('nickname');
         navigate('/login');
       });
-  }, [navigate, nickname]);
+  }, [dispatch, navigate, nickname]);
 
   useEffect(() => {
     getRecord();
@@ -31,10 +31,10 @@ export default function DailyFailureList({ nickname }) {
 
   return (
     <ListContainer>
-      {dailyFailures.length ? (
+      {recordList.length ? (
         <List>
-          {dailyFailures.map((el) => (
-            <DailyFailure key={el.date} failures={el} getRecord={getRecord} />
+          {recordList.map((el) => (
+            <DailyFailure key={el.date} failures={el} />
           ))}
         </List>
       ) : (
