@@ -5,6 +5,7 @@ import axios from '../../api/apiController';
 import Button from '../../components/common/Button';
 import InputForm from '../../components/record/InputForm';
 import Modal from '../../components/common/Modal';
+import checkCurrentTime from '../../utils/helpers/checkCurrentTime';
 
 export default function RecordPage() {
   const [dateYMD, setDateYMD] = useState('2023-01-01');
@@ -15,37 +16,12 @@ export default function RecordPage() {
 
   // 모달 오픈 체크 상태
   const [isVisibleModal, setIsVisibleModal] = useState(false);
-  // const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    checkCurrentTime();
+    checkCurrentTime(setDateYMD, setDateHMS);
+    setInterval(() => checkCurrentTime(setDateYMD, setDateHMS), 1000);
   }, []);
-
-  const checkCurrentTime = () => {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth() + 1;
-    const date = today.getDate();
-    const hours = String(today.getHours()).padStart(2, '0');
-    const minutes = String(today.getMinutes()).padStart(2, '0');
-    const seconds = String(today.getSeconds()).padStart(2, '0');
-
-    setDateYMD(`${year}-${month}-${date}`);
-    setDateHMS(`${hours}:${minutes}:${seconds}`);
-  };
-
-  const timer = () => {
-    setInterval(checkCurrentTime, 1000);
-  };
-
-  // const openModal = () => {
-  //   setModalOpen(true);
-  // };
-
-  timer();
-
-  // localStorage.getItem('nickname', nickname);
 
   const submitContent = async () => {
     await axios
