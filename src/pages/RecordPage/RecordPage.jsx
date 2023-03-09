@@ -1,7 +1,7 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from '../../api/apiController';
 import todaysFailLogo from '../../assets/logo.png';
 import Button from '../../components/record/Button';
 import InputForm from '../../components/record/InputForm';
@@ -50,7 +50,7 @@ export default function RedcordPage() {
 
   const submitContent = async () => {
     await axios
-      .post(`${process.env.REACT_APP_BASE_URL}/record`, {
+      .post(`/record`, {
         // content: '핫케이크를 태웠다. 끝.',
         // feel: '다음에 더 잘하면 된다',
         // title: '핫케이크 태움',
