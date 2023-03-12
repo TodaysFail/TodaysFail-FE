@@ -15,16 +15,21 @@ function recordListReducer(state = initialState, action) {
       };
     case DELETE:
       for (let i = 0; i < state.recordList.length; i++) {
-        newList.push({
-          date: state.recordList[i].date,
-          receiptDate: state.recordList[i].receiptDate,
-          total: state.recordList[i].total,
-          records: [],
-        });
+        const newRecords = [];
+
         for (let j = 0; j < state.recordList[i].records.length; j++) {
           if (state.recordList[i].records[j].id !== action.payload) {
-            newList[i].records.push(state.recordList[i].records[j]);
+            newRecords.push(state.recordList[i].records[j]);
           }
+        }
+
+        if (newRecords.length > 0) {
+          newList.push({
+            date: state.recordList[i].date,
+            receiptDate: state.recordList[i].receiptDate,
+            total: state.recordList[i].total,
+            records: newRecords,
+          });
         }
       }
 
