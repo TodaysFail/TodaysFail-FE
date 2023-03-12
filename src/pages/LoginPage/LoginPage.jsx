@@ -1,7 +1,7 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
+import axios from '../../api/apiController';
 import Logo from '../../components/common/Logo';
 import Button from '../../components/login/Button';
 import SignForm from '../../components/login/SignForm';
@@ -21,7 +21,7 @@ export default function LoginPage() {
   // 시작버튼 클릭 시 서버에 닉네임 전달
   const submitNickname = async (nickname) => {
     await axios
-      .post(`${process.env.REACT_APP_BASE_URL}/member`, {
+      .post(`/member`, {
         name: nickname,
       })
       .then((res) => {
@@ -67,13 +67,13 @@ export default function LoginPage() {
 
 const LoginContainer = styled.div`
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  width: 100%;
-  height: 100vh;
-  padding: 0 15px;
-  margin: 0 auto;
   background-color: #ffffff;
+  padding-top: 23px;
+  max-width: 390px;
+  min-height: 100vh;
+  margin: 0 auto;
 `;
 
 const Main = styled.div`
@@ -87,6 +87,7 @@ const LoginTitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 250px 0px 0px 0px;
 `;
 
 const LoginButtonContainer = styled.div`

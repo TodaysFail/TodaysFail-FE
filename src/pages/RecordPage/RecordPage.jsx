@@ -1,13 +1,13 @@
-import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import todaysFailLogo from '../../assets/logo.png';
-import Button from '../../components/record/Button';
+import axios from '../../api/apiController';
+import Button from '../../components/common/Button';
 import InputForm from '../../components/record/InputForm';
-import Modal from '../../components/record/Modal';
+import Modal from '../../components/common/Modal';
+import checkCurrentTime from '../../utils/helpers/checkCurrentTime';
 
-export default function RedcordPage() {
+export default function RecordPage() {
   const [dateYMD, setDateYMD] = useState('2023-01-01');
   const [dateHMS, setDateHMS] = useState('00:00:00');
   const [titleText, setTitleText] = useState('');
@@ -16,41 +16,16 @@ export default function RedcordPage() {
 
   // 모달 오픈 체크 상태
   const [isVisibleModal, setIsVisibleModal] = useState(false);
-  // const [modalOpen, setModalOpen] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    checkCurrentTime();
+    checkCurrentTime(setDateYMD, setDateHMS);
+    setInterval(() => checkCurrentTime(setDateYMD, setDateHMS), 1000);
   }, []);
-
-  const checkCurrentTime = () => {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth() + 1;
-    const date = today.getDate();
-    const hours = String(today.getHours()).padStart(2, '0');
-    const minutes = String(today.getMinutes()).padStart(2, '0');
-    const seconds = String(today.getSeconds()).padStart(2, '0');
-
-    setDateYMD(`${year}-${month}-${date}`);
-    setDateHMS(`${hours}:${minutes}:${seconds}`);
-  };
-
-  const timer = () => {
-    setInterval(checkCurrentTime, 1000);
-  };
-
-  // const openModal = () => {
-  //   setModalOpen(true);
-  // };
-
-  timer();
-
-  // localStorage.getItem('nickname', nickname);
 
   const submitContent = async () => {
     await axios
-      .post(`${process.env.REACT_APP_BASE_URL}/record`, {
+      .post(`/record`, {
         // content: '핫케이크를 태웠다. 끝.',
         // feel: '다음에 더 잘하면 된다',
         // title: '핫케이크 태움',
@@ -69,10 +44,6 @@ export default function RedcordPage() {
   return (
     <RecordPageContainer>
       <Main>
-        <LogoContainer>
-          <Logo />
-        </LogoContainer>
-
         <RecordPageHeaderContainer>
           <RecordPageHeaderContent>
             <RecordPageHeaderTitle>어떤 실패를 경험하셨나요?</RecordPageHeaderTitle>
@@ -116,15 +87,32 @@ export default function RedcordPage() {
 
       <RecordPageButtonContainer>
         <Button
+          type={{ bgColor: 'white', width: 360, fontSize: 16 }}
           text='취소하기'
           handleClick={() => {
             setIsVisibleModal(true);
           }}
-          type={false}
         />
-        <Button text='저장하기' handleClick={submitContent} type={true} />
+        <Button type={{ bgColor: 'black', width: 360, fontSize: 16 }} text='저장하기' handleClick={submitContent} />
       </RecordPageButtonContainer>
-      {isVisibleModal && <Modal handleClick={setIsVisibleModal} />}
+      {isVisibleModal && (
+        <Modal mainText='정말 취소하실건가요?' subText='실패를 기록하면 성장할 가능성이 높아져요!'>
+          <RecordPageModalButtonContainer>
+            <Button
+              type={{ bgColor: 'white', width: 95, fontSize: 16 }}
+              text='취소하기'
+              handleClick={() => navigate('/')}
+            />
+            <Button
+              type={{ bgColor: 'black', width: 95, fontSize: 16 }}
+              text='계속하기'
+              handleClick={() => {
+                setIsVisibleModal(false);
+              }}
+            />
+          </RecordPageModalButtonContainer>
+        </Modal>
+      )}
     </RecordPageContainer>
   );
 }
@@ -133,7 +121,6 @@ const RecordPageContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   width: 390px;
   /* height: 844px; */
   height: 100vh;
@@ -143,8 +130,8 @@ const RecordPageContainer = styled.div`
 `;
 
 const Main = styled.div`
-  min-height: 572px;
-  /* margin-bottom: 72px; */
+  min-height: 660px;
+  padding: 19px 0px 0px 0px;
 `;
 
 const RecordPageHeaderContainer = styled.div`
@@ -172,9 +159,13 @@ const RecordPageInputContainer = styled.div`
 const RecordPageButtonContainer = styled.div`
   display: flex;
   gap: 10px;
-
   width: 100%;
   margin-bottom: 16px;
+`;
+
+const RecordPageModalButtonContainer = styled.div`
+  display: flex;
+  gap: 10px;
 `;
 
 const RecordPageInputContent = styled.div`
@@ -210,7 +201,8 @@ const RecordPageHeaderTitle = styled.h2`
 const RecordPageHeaderDate = styled.div`
   display: flex;
   width: 330px;
-  justify-content: flex-start;
+  justify-content: space-between;
+  align-items: center;
   padding: 5px;
   border-top: solid 1px;
   border-bottom: solid 1px;
@@ -221,21 +213,17 @@ const RecordPageHeaderDate = styled.div`
 
 const DateYMD = styled.span`
   color: white;
-  margin: 0px 198px 0px 0px;
-
   font-family: 'Pretendard-Bold';
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
   line-height: 150%;
   /* identical to box height, or 21px */
-
   color: #ffffff;
 `;
 
 const DateHMS = styled.span`
   color: white;
-  padding: 1.7px 0px 0px 0px;
   font-family: 'Pretendard-Light';
   font-style: normal;
   font-weight: 400;
@@ -246,16 +234,4 @@ const DateHMS = styled.span`
   text-align: right;
 
   color: #ffffff;
-`;
-
-const LogoContainer = styled.div`
-  width: 100px;
-  padding: 20px 10px 20px 120px;
-`;
-
-const Logo = styled.img.attrs({
-  src: `${todaysFailLogo}`,
-  alt: 'todaysFail Logo',
-})`
-  width: 150px;
 `;
