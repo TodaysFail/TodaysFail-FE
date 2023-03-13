@@ -201,7 +201,8 @@ const RecordPageHeaderTitle = styled.h2`
 const RecordPageHeaderDate = styled.div`
   display: flex;
   width: 330px;
-  justify-content: flex-start;
+  justify-content: space-between;
+  align-items: center;
   padding: 5px;
   border-top: solid 1px;
   border-bottom: solid 1px;
@@ -212,21 +213,17 @@ const RecordPageHeaderDate = styled.div`
 
 const DateYMD = styled.span`
   color: white;
-  margin: 0px 198px 0px 0px;
-
   font-family: 'Pretendard-Bold';
   font-style: normal;
   font-weight: 600;
   font-size: 14px;
   line-height: 150%;
   /* identical to box height, or 21px */
-
   color: #ffffff;
 `;
 
 const DateHMS = styled.span`
   color: white;
-  padding: 1.7px 0px 0px 0px;
   font-family: 'Pretendard-Light';
   font-style: normal;
   font-weight: 400;
