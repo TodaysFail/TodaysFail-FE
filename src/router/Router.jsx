@@ -15,7 +15,7 @@ export default function Router() {
         <Route path='/' element={<MainLayout />}>
           <Route index element={<MyPage />} />
           <Route path='/recordPage' element={<RecordPage />} />
-          <Route path='/receipt' element={<ReceiptPage />} />
+          {/* <Route path='/receipt' element={<ReceiptPage />} /> */}
           <Route path='/receipt/:receiptId' element={<SharePage />} />
         </Route>
       </Routes>

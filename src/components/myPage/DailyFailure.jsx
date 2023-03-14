@@ -1,12 +1,20 @@
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from '../../api/apiController';
 import Button from '../common/Button';
 import Failure from './Failure';
 
-export default function DailyFailure({ failures }) {
+export default function DailyFailure({ failures, writer }) {
   const navigate = useNavigate();
-  const handlePrint = () => {
-    navigate(`/receipt?date=${failures.date}`);
+  const handlePrint = async () => {
+    const res = await axios.post(`/receipt`, {
+      date: failures.date,
+      writer,
+    });
+
+    navigate(`/receipt/${res.data}`);
+
+    return res;
   };
 
   return (
