@@ -34,7 +34,7 @@ export default function DailyFailureList({ nickname }) {
       {recordList.length ? (
         <List>
           {recordList.map((el) => (
-            <DailyFailure key={el.date} failures={el} />
+            <DailyFailure key={el.date} failures={el} writer={nickname} />
           ))}
         </List>
       ) : (

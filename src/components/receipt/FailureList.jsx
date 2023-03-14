@@ -25,7 +25,7 @@ export default function FailureList({ total, failureList }) {
 
 const TotalFailContainer = styled.section`
   width: 330px;
-  height: 355px;
+  height: 300px;
   margin-top: 14px;
   position: relative;
   display: flex;

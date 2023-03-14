@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from '../../api/apiController';
 import codeImg from '../../assets/barcode.svg';
-import receiptBg from '../../assets/share-bg.png';
+import receiptBg from '../../assets/receipt.svg';
 import FailureList from './FailureList';
 import RecordDateCard from './RecordDateCard';
 
@@ -46,7 +46,7 @@ const Container = styled.section`
   flex-direction: column;
   align-items: center;
   width: 360px;
-  height: 730px;
+  height: 613px;
   padding: 0 15px;
   background-image: url(${receiptBg});
   font-family: 'Galmuri11';
@@ -55,7 +55,7 @@ const Container = styled.section`
 const Title = styled.h2`
   font-size: 20px;
   font-weight: 400;
-  margin-top: 44px;
+  margin-top: 54px;
   padding-bottom: 15px;
   text-align: center;
 `;
@@ -65,7 +65,7 @@ const BarcodeImg = styled.img.attrs({
   alt: '바코드 이미지',
 })`
   width: 248px;
-  margin-top: 20px;
+  margin-top: 13px;
 `;
 
 const Barcode = styled.p`
