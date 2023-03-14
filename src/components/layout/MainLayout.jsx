@@ -1,12 +1,14 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import styled from 'styled-components';
 import Logo from '../common/Logo';
 
 export default function MainLayout() {
   return (
     <Container>
-      <Logo />
+      <Link to='/'>
+        <Logo />
+      </Link>
       <Outlet />
     </Container>
   );
