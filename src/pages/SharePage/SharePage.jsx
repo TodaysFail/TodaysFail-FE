@@ -22,27 +22,20 @@ export default function SharePage() {
   };
 
   const handleClick = () => {
-    navigator.clipboard.writeText(window.location.href);
+    navigator.clipboard.writeText(window.location.href).then(setIsVisibleModal(true));
   };
 
   return (
     <Container>
       <h1 className='sr-only'>나의 영수증 공유 페이지</h1>
       <ReceiptShareContainer />
-      <Button
-        type={shareBtnType}
-        text={'자랑하기'}
-        handleClick={() => {
-          setIsVisibleModal(true);
-        }}
-      />
+      <Button type={shareBtnType} text={'자랑하기'} handleClick={handleClick} />
       {isVisibleModal && (
         <Modal mainText={'주소가 복사되었습니다'} subText={'오늘의 실패를  부담없이 공유해보세요!'}>
           <Button
             type={modalBtnType}
             text={'그럴게요'}
             handleClick={() => {
-              handleClick();
               setIsVisibleModal(false);
             }}
           />
