@@ -21,7 +21,7 @@ export default function SharePage() {
     fontSize: '16',
   };
 
-  const handleClick = () => {
+  const handleCopy = () => {
     navigator.clipboard.writeText(window.location.href).then(setIsVisibleModal(true));
   };
 
@@ -29,7 +29,7 @@ export default function SharePage() {
     <Container>
       <h1 className='sr-only'>나의 영수증 공유 페이지</h1>
       <ReceiptShareContainer />
-      <Button type={shareBtnType} text={'자랑하기'} handleClick={handleClick} />
+      <Button type={shareBtnType} text={'자랑하기'} handleClick={handleCopy} />
       {isVisibleModal && (
         <Modal mainText={'주소가 복사되었습니다'} subText={'오늘의 실패를  부담없이 공유해보세요!'}>
           <Button
