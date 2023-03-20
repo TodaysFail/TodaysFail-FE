@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from '../../api/apiController';
 import Button from '../../components/common/Button';
-import InputForm from '../../components/record/InputForm';
 import Modal from '../../components/common/Modal';
+import InputForm from '../../components/record/InputForm';
 import checkCurrentTime from '../../utils/helpers/checkCurrentTime';
 
 export default function RecordPage() {
@@ -121,16 +121,19 @@ const RecordPageContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  width: 390px;
-  /* height: 844px; */
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+  flex: auto;
   padding: 0 15px;
   margin: 0 auto;
   background: #ffffff;
 `;
 
 const Main = styled.div`
-  min-height: 660px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex: auto;
   padding: 19px 0px 0px 0px;
 `;
 
@@ -138,13 +141,12 @@ const RecordPageHeaderContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  /* width: 360px; */
+  padding: 20px 15px;
   width: 100%;
   height: 122px;
   background: green;
   background: #000000;
   border-radius: 10px;
-  /* margin: 10px 10px 10px 15px; */
 `;
 
 const RecordPageInputContainer = styled.div`
@@ -153,7 +155,9 @@ const RecordPageInputContainer = styled.div`
   background: #fafafa;
   border-radius: 10px;
   padding: 15px;
-  height: 79%;
+  height: 100%;
+  flex: auto;
+  margin-bottom: 12px;
 `;
 
 const RecordPageButtonContainer = styled.div`
@@ -179,9 +183,9 @@ const RecordPageHeaderContent = styled.div`
 `;
 
 const RecordPageHeaderTitle = styled.h2`
-  /* width: 390px; */
   width: 100%;
-  padding: 8px 10px 0px 79px;
+  display: flex;
+  justify-content: center;
   color: white;
 
   font-family: 'Pretendard-Light';
@@ -200,14 +204,12 @@ const RecordPageHeaderTitle = styled.h2`
 
 const RecordPageHeaderDate = styled.div`
   display: flex;
-  width: 330px;
   justify-content: space-between;
   align-items: center;
   padding: 5px;
   border-top: solid 1px;
   border-bottom: solid 1px;
   border-color: white;
-  margin: 0px 10px 10px 13px;
   flex-wrap: nowrap;
 `;
 
