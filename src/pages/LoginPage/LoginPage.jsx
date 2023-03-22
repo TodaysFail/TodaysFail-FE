@@ -61,8 +61,10 @@ export default function LoginPage() {
           <Logo width={'197px'} />
           <LoginTitle>하루의 실패를 기록하고 성장하는 법</LoginTitle>
         </LoginTitleContainer>
-        <ValidForm {...nicknameProps} />
-        <ValidForm {...passwordProps} />
+        <LoginFormContainer>
+          <ValidForm {...nicknameProps} />
+          <ValidForm {...passwordProps} />
+        </LoginFormContainer>
         <LoginNoticeContainer>
           <LoginNoticeContant>
             <Notice color='#ff4141'>{warningMessage}</Notice>
@@ -104,7 +106,16 @@ const LoginTitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 250px 0px 0px 0px;
+  padding: 215px 0px 0px 0px;
+`;
+
+const LoginFormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 55px;
+  width: 100%;
 `;
 
 const LoginButtonContainer = styled.div`

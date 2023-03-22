@@ -33,8 +33,8 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   width: 95%;
-  margin-top: 92px;
   border-bottom: 1px solid #b8b8b8;
+  padding-top: 35px;
 `;
 const Bullet = styled.span`
   margin-right: 6px;
