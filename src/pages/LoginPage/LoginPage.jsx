@@ -1,34 +1,57 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import axios from '../../api/apiController';
 import Logo from '../../components/common/Logo';
 import Button from '../../components/login/Button';
-import SignForm from '../../components/login/SignForm';
+import ValidForm from '../../components/login/ValidForm';
 
 export default function LoginPage() {
   const [nickname, setNickname] = useState('');
-  const [isDuplicated, setIsDuplicated] = useState(true);
+  const [password, setPassword] = useState('');
+  const [isNicknameValid, setIsNicknameValid] = useState(false);
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [warningMessage, setWarningMessage] = useState('');
 
   const navigate = useNavigate();
 
-  // 로컬 스토리지에 닉네임 있다면 마이페이지로 리다이렉트
-  useEffect(() => {
-    if (localStorage.getItem('nickname')) navigate('/');
-  }, [navigate]);
-
   // 시작버튼 클릭 시 서버에 닉네임 전달
-  const submitNickname = async (nickname) => {
+  const submitLoginInfo = async (nickname, password) => {
     await axios
-      .post(`/member`, {
+      .post(`/member/login`, {
         name: nickname,
+        password,
       })
       .then((res) => {
         navigate('/');
-        localStorage.setItem('nickname', nickname);
       })
-      .catch((res) => {});
+      .catch((res) => {
+        setWarningMessage('입력한 정보가 일치하지 않습니다');
+      });
+  };
+
+  const nicknameProps = {
+    type: 'text',
+    value: nickname,
+    setValue: setNickname,
+    placeholder: '닉네임을 입력하세요!',
+    regex: /^[a-z0-9ㄱ-ㅎ가-힣]{1,10}$/,
+    setIsValid: setIsNicknameValid,
+  };
+
+  const passwordProps = {
+    type: 'password',
+    value: password,
+    setValue: setPassword,
+    placeholder: '비밀번호를 입력하세요!',
+    regex: /^[a-zA-Z0-9]{1,}$/,
+    setIsValid: setIsPasswordValid,
+  };
+
+  const activateButton = (isNicknameValid, isPasswordValid, password) => {
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+    return !(isNicknameValid && isPasswordValid && regex.test(password));
   };
 
   return (
@@ -38,25 +61,21 @@ export default function LoginPage() {
           <Logo width={'197px'} />
           <LoginTitle>하루의 실패를 기록하고 성장하는 법</LoginTitle>
         </LoginTitleContainer>
-        <SignForm
-          nickname={nickname}
-          setNickname={setNickname}
-          isDuplicated={isDuplicated}
-          setIsDuplicated={setIsDuplicated}
-          warningMessage={warningMessage}
-          setWarningMessage={setWarningMessage}
-        />
+        <LoginFormContainer>
+          <ValidForm {...nicknameProps} />
+          <ValidForm {...passwordProps} />
+        </LoginFormContainer>
         <LoginNoticeContainer>
           <LoginNoticeContant>
-            <Notice color={isDuplicated ? '#ff4141' : '#2BCF4F'}>{warningMessage}</Notice>
+            <Notice color='#ff4141'>{warningMessage}</Notice>
           </LoginNoticeContant>
         </LoginNoticeContainer>
         <LoginButtonContainer>
           <Button
             text='시작하기'
-            disabled={isDuplicated}
+            disabled={activateButton(isNicknameValid, isPasswordValid, password)}
             handleClick={() => {
-              submitNickname(nickname);
+              submitLoginInfo(nickname, password);
             }}
           ></Button>
         </LoginButtonContainer>
@@ -87,7 +106,16 @@ const LoginTitleContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 250px 0px 0px 0px;
+  padding: 215px 0px 0px 0px;
+`;
+
+const LoginFormContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 55px;
+  width: 100%;
 `;
 
 const LoginButtonContainer = styled.div`
