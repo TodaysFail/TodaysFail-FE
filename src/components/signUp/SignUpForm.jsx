@@ -1,69 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
-import Button from '../../components/common/Button';
 
-export default function SignUpForm() {
-  const formType = [
-    {
-      title: '닉네임',
-      inputID: 'nickname',
-      maxLength: '10',
-      placeholder: '닉네임을 정해주세요!',
-      type: 'text',
-      warningText: '이미 존재하는 닉네임입니다',
-    },
-    {
-      title: '비밀번호',
-      inputID: 'pw',
-      maxLength: '16',
-      placeholder: '비밀번호를 입력하세요',
-      type: 'password',
-      warningText: '영문과 숫자를 조합하여 8자리 이상 입력해야 합니다',
-    },
-    {
-      title: '비밀번호 확인',
-      inputID: 'pwCheck',
-      maxLength: '16',
-      placeholder: '비밀번호를 한번 더 입력하세요',
-      type: 'password',
-      warningText: '비밀번호가 일치하지 않습니다',
-    },
-  ];
-
-  const buttonType = {
-    bgColor: 'black',
-    width: '359',
-    fontSize: '16',
-    isFixed: false,
-  };
-
+export default function SignUpForm({ title, id, maxLength, placeholder, type, warningText }) {
   return (
     <Container>
-      {formType.map((formType, i) => (
-        <FormContainer key={i}>
-          <Title htmlFor={formType.inputID}>{formType.title}</Title>
-          <InputContainer>
-            <Input id={formType.inputID} placeholder={formType.placeholder} type={formType.type} />
-            <TextCounter>0 / {formType.maxLength}</TextCounter>
-          </InputContainer>
-          <WarningText>{formType.warningText}</WarningText>
-        </FormContainer>
-      ))}
-      {/* 공통 컴포넌트 수정 후 버튼 수정 */}
-      <ButtonContainer>
-        <Button type={buttonType} text={'가입하기'} />
-      </ButtonContainer>
+      <Title htmlFor={id}>{title}</Title>
+      <InputContainer>
+        <Input id={id} placeholder={placeholder} type={type} />
+        <TextCounter>0 / {maxLength}</TextCounter>
+      </InputContainer>
+      <WarningText>{warningText}</WarningText>
     </Container>
   );
 }
 
-const Container = styled.form`
-  margin-top: 48px;
-  width: 100%;
-  height: 100%;
-`;
-
-const FormContainer = styled.section`
+const Container = styled.section`
   display: flex;
   flex-direction: column;
   margin-bottom: 22px;
@@ -146,8 +97,4 @@ const WarningText = styled.strong`
   line-height: 150%;
   letter-spacing: -0.011em;
   color: #ff4141;
-`;
-
-const ButtonContainer = styled.div`
-  margin-top: 79px;
 `;
