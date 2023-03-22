@@ -15,15 +15,14 @@ export default function DailyFailureList({ nickname }) {
 
   const getRecord = useCallback(() => {
     axios
-      .get(`/record?writer=${nickname}`)
+      .get(`/record`)
       .then((res) => {
         dispatch(setRecordList(res.data));
       })
       .catch(() => {
-        localStorage.removeItem('nickname');
         navigate('/login');
       });
-  }, [dispatch, navigate, nickname]);
+  }, [dispatch, navigate]);
 
   useEffect(() => {
     getRecord();
