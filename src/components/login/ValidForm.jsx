@@ -2,19 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Vector } from '../../assets/Vector.svg';
 
-export default function ValidForm({ type, value, setValue, placeholder, regex, SetIsValid }) {
+export default function ValidForm({ type, value, setValue, placeholder, regex, setIsValid }) {
   // 유효성 체크: 영문 소문자와 숫자만 사용 가능하고 최소 길이는 1 최대 길이는 10
   const checkValidNickname = (event) => {
     const input = event.target.value;
 
     if (regex.test(input)) {
       setValue(input);
-      SetIsValid(true);
+      setIsValid(true);
     }
 
     if (input === '') {
       setValue('');
-      SetIsValid(false);
+      setIsValid(false);
     }
   };
 
