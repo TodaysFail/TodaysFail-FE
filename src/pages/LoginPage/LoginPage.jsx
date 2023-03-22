@@ -9,8 +9,8 @@ import ValidForm from '../../components/login/ValidForm';
 export default function LoginPage() {
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
-  const [isNicknameValid, SetIsNicknameValid] = useState(false);
-  const [isPasswordValid, SetIsPasswordValid] = useState(false);
+  const [isNicknameValid, setIsNicknameValid] = useState(false);
+  const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [warningMessage, setWarningMessage] = useState('');
 
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ export default function LoginPage() {
     setValue: setNickname,
     placeholder: '닉네임을 입력하세요!',
     regex: /^[a-z0-9ㄱ-ㅎ가-힣]{1,10}$/,
-    SetIsValid: SetIsNicknameValid,
+    setIsValid: setIsNicknameValid,
   };
 
   const passwordProps = {
@@ -45,7 +45,7 @@ export default function LoginPage() {
     setValue: setPassword,
     placeholder: '비밀번호를 입력하세요!',
     regex: /^[a-zA-Z0-9]{1,}$/,
-    SetIsValid: SetIsPasswordValid,
+    setIsValid: setIsPasswordValid,
   };
 
   const activateButton = (isNicknameValid, isPasswordValid, password) => {
