@@ -1,16 +1,26 @@
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { deleteRecord } from '../../actions/recordListActions';
 import axios from '../../api/apiController';
 import { ReactComponent as DeleteIcon } from '../../assets/delete.svg';
 import { ReactComponent as StarIcon } from '../../assets/star_icon.svg';
+import Button from '../common/Button';
+import Modal from '../common/Modal';
 
 export default function Failure({ failure, getRecord, num }) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [isVisibleModal, setIsVisibleModal] = useState(false);
+
+  const handleUpdate = () => {
+    navigate(`/recordpage?recordId=${failure.id}`);
+  };
 
   const handleDelete = () => {
     axios
-      .delete(`/record?writer=${localStorage.getItem('nickname')}&recordId=${failure.id}`)
+      .delete(`/record?recordId=${failure.id}`)
       .then(() => {
         dispatch(deleteRecord(failure.id));
       })
@@ -33,11 +43,28 @@ export default function Failure({ failure, getRecord, num }) {
             <StarIcon />
             <span>{failure.feel}</span>
           </FeelText>
-          <DeleteButton onClick={handleDelete}>
-            <DeleteIcon />
-          </DeleteButton>
+          <ButtonContainer>
+            <IconButton onClick={handleUpdate}>수정</IconButton>
+            <IconButton onClick={() => setIsVisibleModal(true)}>
+              <DeleteIcon />
+            </IconButton>
+          </ButtonContainer>
         </Feel>
       </Main>
+      {isVisibleModal && (
+        <Modal mainText='정말 삭제하실건가요?' subText='지금까지 기록한 실패가 삭제됩니다.'>
+          <RecordPageModalButtonContainer>
+            <Button
+              type={{ bgColor: 'white', width: 95, fontSize: 16 }}
+              text='취소하기'
+              handleClick={() => {
+                setIsVisibleModal(false);
+              }}
+            />
+            <Button type={{ bgColor: 'black', width: 95, fontSize: 16 }} text='삭제하기' handleClick={handleDelete} />
+          </RecordPageModalButtonContainer>
+        </Modal>
+      )}
     </FailureContainer>
   );
 }
@@ -110,9 +137,19 @@ const FeelText = styled.div`
   gap: 6px;
 `;
 
-const DeleteButton = styled.button`
+const ButtonContainer = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+const IconButton = styled.button`
   cursor: pointer;
   display: flex;
   align-items: center;
   height: 8px;
+`;
+
+const RecordPageModalButtonContainer = styled.div`
+  display: flex;
+  gap: 10px;
 `;
