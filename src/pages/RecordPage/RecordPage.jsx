@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from '../../api/apiController';
 import Button from '../../components/common/Button';
@@ -8,37 +8,66 @@ import InputForm from '../../components/record/InputForm';
 import checkCurrentTime from '../../utils/helpers/checkCurrentTime';
 
 export default function RecordPage() {
+  const [searchParams] = useSearchParams();
   const [dateYMD, setDateYMD] = useState('2023-01-01');
   const [dateHMS, setDateHMS] = useState('00:00:00');
   const [titleText, setTitleText] = useState('');
   const [contentText, setContentText] = useState('');
   const [feelText, setFeelText] = useState('');
+  const recordId = searchParams.get('recordId');
 
   // 모달 오픈 체크 상태
   const [isVisibleModal, setIsVisibleModal] = useState(false);
   const navigate = useNavigate();
 
+  const getContent = useCallback(async () => {
+    const recordRes = await axios.get(`/record/${recordId}`);
+
+    return recordRes.data;
+  }, [recordId]);
+
+  const setContent = useCallback(async () => {
+    const recordData = await getContent();
+
+    setTitleText(recordData.title);
+    setContentText(recordData.content);
+    setFeelText(recordData.feel);
+  }, [getContent]);
+
   useEffect(() => {
+    if (recordId) {
+      setContent();
+    }
+
     checkCurrentTime(setDateYMD, setDateHMS);
     setInterval(() => checkCurrentTime(setDateYMD, setDateHMS), 1000);
-  }, []);
+  }, [getContent, recordId, setContent]);
 
   const submitContent = async () => {
-    await axios
-      .post(`/record`, {
-        // content: '핫케이크를 태웠다. 끝.',
-        // feel: '다음에 더 잘하면 된다',
-        // title: '핫케이크 태움',
-        // writer: '도모',
-        content: contentText,
-        feel: feelText,
-        title: titleText,
-        writer: localStorage.getItem('nickname'),
-      })
-      .then((res) => {
-        navigate('/');
-      })
-      .catch((res) => {});
+    if (recordId) {
+      await axios
+        .put(`/record`, {
+          content: contentText,
+          feel: feelText,
+          recordId,
+          title: titleText,
+        })
+        .then((res) => {
+          navigate('/');
+        })
+        .catch();
+    } else {
+      await axios
+        .post(`/record`, {
+          content: contentText,
+          feel: feelText,
+          title: titleText,
+        })
+        .then((res) => {
+          navigate('/');
+        })
+        .catch((res) => {});
+    }
   };
 
   return (
