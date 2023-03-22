@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from '../../api/apiController';
 import Button from '../../components/common/Button';
 import DailyFailureList from '../../components/myPage/DailyFailureList';
 import Profile from '../../components/myPage/Profile';
@@ -8,11 +9,16 @@ import TodaysDate from '../../components/myPage/TodaysDate';
 
 export default function MyPage() {
   const navigate = useNavigate();
-  const nickname = localStorage.getItem('nickname');
+  const [nickname, setNickname] = useState('');
 
   useEffect(() => {
-    if (nickname === null) navigate('/login');
-  }, [navigate, nickname]);
+    axios
+      .get('/member/info')
+      .then((res) => {
+        setNickname(res.data.name);
+      })
+      .catch(() => navigate('/login'));
+  }, [navigate]);
 
   const handleClick = () => {
     navigate('/recordPage');
@@ -29,7 +35,7 @@ export default function MyPage() {
     <Container>
       <Main>
         <TodaysDate />
-        <Profile />
+        <Profile nickname={nickname} />
         <DailyFailureList nickname={nickname} />
         <Button type={buttonType} handleClick={handleClick} text={'기록하기'} />
       </Main>

@@ -2,12 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import Character from './Character';
 
-export default function Profile() {
+export default function Profile({ nickname }) {
   return (
     <ProfileContainer>
       <ProfileMain>
         <Greet>
-          <Nickname>{localStorage.getItem('nickname')}&nbsp;</Nickname>
+          <Nickname>{nickname}&nbsp;</Nickname>
           <span>님,</span>
           <div>안녕하세요!</div>
         </Greet>
