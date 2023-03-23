@@ -29,7 +29,7 @@ export default function SignUpForm({
     <Container>
       <Title htmlFor={inputID}>{title}</Title>
       <InputContainer changeBorder={border}>
-        <Input id={inputID} placeholder={placeholder} type={type} onBlur={getValue} onFocus={renderBorder} />
+        <Input id={inputID} placeholder={placeholder} type={type} onChange={getValue} onFocus={renderBorder} />
         <TextCounter view={isValid}>
           {value.length} / {maxLength}
         </TextCounter>

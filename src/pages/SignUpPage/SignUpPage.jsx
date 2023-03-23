@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUpdateEffect } from 'react-use';
+import { useDebounce, useUpdateEffect } from 'react-use';
 import styled from 'styled-components';
 import axios from '../../api/apiController';
 import Button from '../../components/common/Button';
@@ -59,6 +59,14 @@ export default function SignUpPage() {
   useUpdateEffect(() => {
     nicknameValid();
   }, [nickname]);
+
+  useDebounce(
+    () => {
+      nicknameValid();
+    },
+    1000,
+    [nickname],
+  );
 
   useUpdateEffect(() => {
     passwordValid();
