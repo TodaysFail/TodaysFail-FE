@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDebounce, useUpdateEffect } from 'react-use';
 import styled from 'styled-components';
 import axios from '../../api/apiController';
-import Button from '../../components/common/Button';
 import Logo from '../../components/common/Logo';
+import SignUpButton from '../../components/signUp/SignUpButton';
 import SignUpForm from '../../components/signUp/SignUpForm';
 
 export default function SignUpPage() {
@@ -17,7 +17,44 @@ export default function SignUpPage() {
   const [isPwValid, setIsPwValid] = useState(false);
   const [pwCheckWarnText, setPwCheckWarnText] = useState('');
   const [isPwCheckValid, setIsPwCheckValid] = useState(false);
+  const [isDisabled, setIsDisabled] = useState(true);
   const navigate = useNavigate();
+
+  const nicknameProps = {
+    title: '닉네임',
+    inputID: 'nickname',
+    maxLength: '10',
+    placeholder: '닉네임을 정해주세요!',
+    type: 'text',
+    value: nickname,
+    setValue: setNickname,
+    warningText: nicknameWarnText,
+    isValid: isNicknameValid,
+  };
+
+  const passwordProps = {
+    title: '비밀번호',
+    inputID: 'pw',
+    maxLength: '16',
+    placeholder: '비밀번호를 입력하세요',
+    type: 'password',
+    value: password,
+    setValue: setPassword,
+    warningText: pwWarnText,
+    isValid: isPwValid,
+  };
+
+  const passwordCheckProps = {
+    title: '비밀번호 확인',
+    inputID: 'pwCheck',
+    maxLength: '16',
+    placeholder: '비밀번호를 한번 더 입력하세요',
+    type: 'password',
+    value: pwCheck,
+    setValue: setPwCheck,
+    warningText: pwCheckWarnText,
+    isValid: isPwCheckValid,
+  };
 
   const nicknameValid = async () => {
     const regex = /^[a-z0-9ㄱ-ㅎ가-힣]{1,10}$/;
@@ -86,59 +123,16 @@ export default function SignUpPage() {
     pwCheckValid();
   }, [pwCheck]);
 
-  const buttonType = {
-    bgColor: isNicknameValid && isPwValid && isPwCheckValid ? 'black' : 'white',
-    width: '359',
-    fontSize: '16',
-    isFixed: false,
-  };
-
-  const nicknameProps = {
-    title: '닉네임',
-    inputID: 'nickname',
-    maxLength: '10',
-    placeholder: '닉네임을 정해주세요!',
-    type: 'text',
-    value: nickname,
-    setValue: setNickname,
-    warningText: nicknameWarnText,
-    isValid: isNicknameValid,
-  };
-
-  const passwordProps = {
-    title: '비밀번호',
-    inputID: 'pw',
-    maxLength: '16',
-    placeholder: '비밀번호를 입력하세요',
-    type: 'password',
-    value: password,
-    setValue: setPassword,
-    warningText: pwWarnText,
-    isValid: isPwValid,
-  };
-
-  const passwordCheckProps = {
-    title: '비밀번호 확인',
-    inputID: 'pwCheck',
-    maxLength: '16',
-    placeholder: '비밀번호를 한번 더 입력하세요',
-    type: 'password',
-    value: pwCheck,
-    setValue: setPwCheck,
-    warningText: pwCheckWarnText,
-    isValid: isPwCheckValid,
-  };
-
   const activeButton = () => {
-    if (isNicknameValid && isPwValid && isPwCheckValid) {
-      return true;
+    if (isNicknameValid && isNicknameValid && isPwCheckValid) {
+      return setIsDisabled(false);
     } else {
-      return false;
+      return setIsDisabled(true);
     }
   };
 
   const handleClick = async () => {
-    if (activeButton) {
+    if (!isDisabled) {
       await axios
         .post(`/member`, {
           name: nickname,
@@ -151,6 +145,15 @@ export default function SignUpPage() {
     }
   };
 
+  useEffect(
+    () => {
+      activeButton();
+    },
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isNicknameValid, isNicknameValid, isPwCheckValid],
+  );
+
   return (
     <LoginContainer>
       <Logo />
@@ -160,9 +163,8 @@ export default function SignUpPage() {
         <SignUpForm {...passwordProps} />
         <SignUpForm {...passwordCheckProps} />
       </FormContainer>
-      {/* 공통 컴포넌트 수정 후 버튼 수정 */}
       <ButtonContainer>
-        <Button disabled={activeButton} type={buttonType} text={'가입하기'} handleClick={handleClick} />
+        <SignUpButton text={'가입하기'} handleClick={handleClick} isDisabled={isDisabled} />
       </ButtonContainer>
     </LoginContainer>
   );

@@ -31,15 +31,26 @@ export default function SignUpForm({
     [value],
   );
 
-  const renderBorder = () => {
+  const renderFocusBorder = () => {
     isValid ? setBorder(false) : setBorder(true);
+  };
+
+  const renderFocusOutBorder = () => {
+    setBorder(false);
   };
 
   return (
     <Container>
       <Title htmlFor={inputID}>{title}</Title>
       <InputContainer changeBorder={border}>
-        <Input id={inputID} placeholder={placeholder} type={type} onChange={getValue} onFocus={renderBorder} />
+        <Input
+          id={inputID}
+          placeholder={placeholder}
+          type={type}
+          onChange={getValue}
+          onFocus={renderFocusBorder}
+          onBlur={renderFocusOutBorder}
+        />
         <TextCounter view={isValid}>
           {value.length} / {maxLength}
         </TextCounter>
