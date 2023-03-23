@@ -31,11 +31,11 @@ export default function DailyFailureList({ nickname }) {
   return (
     <ListContainer>
       {recordList.length ? (
-        <List>
+        <div>
           {recordList.map((el) => (
             <DailyFailure key={el.date} failures={el} writer={nickname} />
           ))}
-        </List>
+        </div>
       ) : (
         <NoFailures />
       )}
@@ -45,9 +45,10 @@ export default function DailyFailureList({ nickname }) {
 
 const ListContainer = styled.div`
   width: 100%;
-  height: 100%;
-`;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
 
-const List = styled.div`
-  padding-bottom: 52px;
+  flex-grow: 1;
+  padding-bottom: 72px;
 `;

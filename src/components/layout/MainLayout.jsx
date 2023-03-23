@@ -21,6 +21,10 @@ const Container = styled.div`
   background-color: #ffffff;
   padding-top: 23px;
   max-width: 390px;
-  min-height: 100vh;
+  height: 100vh;
   margin: 0 auto;
+  overflow: scroll;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
