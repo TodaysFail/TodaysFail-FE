@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useUpdateEffect } from 'react-use';
 import styled from 'styled-components';
 import axios from '../../api/apiController';
@@ -16,6 +17,7 @@ export default function SignUpPage() {
   const [isPwValid, setIsPwValid] = useState(false);
   const [pwCheckWarnText, setPwCheckWarnText] = useState('');
   const [isPwCheckValid, setIsPwCheckValid] = useState(false);
+  const navigate = useNavigate();
 
   const nicknameValid = async () => {
     const regex = /^[a-z0-9ㄱ-ㅎ가-힣]{1,10}$/;
@@ -117,7 +119,19 @@ export default function SignUpPage() {
     }
   };
 
-  const handleClick = () => {};
+  const handleClick = async () => {
+    if (activeButton) {
+      await axios
+        .post(`/member`, {
+          name: nickname,
+          password,
+        })
+        .then((res) => {
+          navigate('/login');
+        })
+        .catch((res) => {});
+    }
+  };
 
   return (
     <LoginContainer>
