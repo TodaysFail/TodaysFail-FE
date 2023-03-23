@@ -62,6 +62,5 @@ const FailuresContainer = styled.div`
   background-color: #fafafa;
   border-radius: 10px;
   padding: 18px 14px;
-  margin-bottom: 24px;
   gap: 18px;
 `;

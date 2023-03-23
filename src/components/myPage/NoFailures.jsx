@@ -13,9 +13,12 @@ export default function NoFailures() {
 }
 
 const Container = styled.div`
-  padding-bottom: 72px;
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: auto;
+
+  flex-grow: 1;
 `;
 
 const Main = styled.div`
@@ -23,6 +26,7 @@ const Main = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
   gap: 18px;
   width: 100%;
   height: 100%;
