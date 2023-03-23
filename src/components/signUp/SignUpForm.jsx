@@ -26,6 +26,8 @@ export default function SignUpForm({
         setBorder(true);
       }
     },
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [value],
   );
 
