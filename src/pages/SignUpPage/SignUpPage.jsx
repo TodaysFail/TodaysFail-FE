@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useUpdateEffect } from 'react-use';
+import { useDebounce, useUpdateEffect } from 'react-use';
 import styled from 'styled-components';
 import axios from '../../api/apiController';
 import Button from '../../components/common/Button';
@@ -35,30 +35,48 @@ export default function SignUpPage() {
       } else {
         return [setNicknameWarnText('사용할 수 있는 닉네임입니다'), setIsNicknameValid(true)];
       }
+    } else {
+      return [setNicknameWarnText(''), setIsNicknameValid(false)];
     }
   };
 
   const passwordValid = () => {
     const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\w\W]{8,}$/;
 
-    if (regex.test(password)) {
-      return [setPwWarnText('사용할 수 있는 비밀번호입니다'), setIsPwValid(true)];
+    if (password.length > 0) {
+      if (regex.test(password)) {
+        return [setPwWarnText('사용할 수 있는 비밀번호입니다'), setIsPwValid(true)];
+      } else {
+        return [setPwWarnText('8자 이상 입력해 주세요 (영문 대소문자/숫자 각 1자리 이상 조합)'), setIsPwValid(false)];
+      }
     } else {
-      return [setPwWarnText('8자 이상 입력해 주세요 (영문 대소문자/숫자 각 1자리 이상 조합)'), setIsPwValid(false)];
+      return [setPwWarnText(''), setIsPwValid(false)];
     }
   };
 
   const pwCheckValid = () => {
-    if (password === pwCheck) {
-      return [setPwCheckWarnText('비밀번호가 일치합니다'), setIsPwCheckValid(true)];
+    if (pwCheck.length > 0) {
+      if (password === pwCheck) {
+        return [setPwCheckWarnText('비밀번호가 일치합니다'), setIsPwCheckValid(true)];
+      } else {
+        return [setPwCheckWarnText('비밀번호가 일치하지 않습니다'), setIsPwCheckValid(false)];
+      }
     } else {
-      return [setPwCheckWarnText('비밀번호가 일치하지 않습니다'), setIsPwCheckValid(false)];
+      return [setPwCheckWarnText(''), setIsPwCheckValid(false)];
     }
   };
 
   useUpdateEffect(() => {
     nicknameValid();
   }, [nickname]);
+
+  useDebounce(
+    () => {
+      nicknameValid();
+    },
+    500,
+    [nickname],
+  );
 
   useUpdateEffect(() => {
     passwordValid();
