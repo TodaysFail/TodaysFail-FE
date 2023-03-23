@@ -1,15 +1,40 @@
-import React from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 
-export default function SignUpForm({ title, id, maxLength, placeholder, type, warningText }) {
+export default function SignUpForm({
+  title,
+  inputID,
+  maxLength,
+  placeholder,
+  type,
+  value,
+  setValue,
+  warningText,
+  isValid,
+}) {
+  const [border, setBorder] = useState(false);
+
+  const getValue = (e) => {
+    const value = e.target.value;
+
+    setValue(value);
+    setBorder(false);
+  };
+
+  const renderBorder = () => {
+    isValid ? setBorder(false) : setBorder(true);
+  };
+
   return (
     <Container>
-      <Title htmlFor={id}>{title}</Title>
-      <InputContainer>
-        <Input id={id} placeholder={placeholder} type={type} />
-        <TextCounter>0 / {maxLength}</TextCounter>
+      <Title htmlFor={inputID}>{title}</Title>
+      <InputContainer changeBorder={border}>
+        <Input id={inputID} placeholder={placeholder} type={type} onBlur={getValue} onFocus={renderBorder} />
+        <TextCounter view={isValid}>
+          {value.length} / {maxLength}
+        </TextCounter>
       </InputContainer>
-      <WarningText>{warningText}</WarningText>
+      <WarningText textColor={isValid}>{warningText}</WarningText>
     </Container>
   );
 }
@@ -40,8 +65,7 @@ const InputContainer = styled.div`
   justify-content: space-between;
   width: 100%;
   margin-top: 16px;
-  /* 입력 상태(focus)일 때 컬러 변경(#848484) */
-  border: 1px solid #c7c7c7;
+  border: ${(props) => (props.changeBorder ? '1px solid #848484' : '1px solid #c7c7c7')};
   border-radius: 4px;
 `;
 
@@ -75,7 +99,6 @@ const Input = styled.input`
   }
 `;
 
-// 타이핑 완료 시 display: none
 const TextCounter = styled.p`
   padding: 8px 10px;
   font-family: 'Pretendard';
@@ -85,9 +108,9 @@ const TextCounter = styled.p`
   line-height: 150%;
   letter-spacing: -0.011em;
   color: #c7c7c7;
+  display: ${(props) => props.view && 'none'};
 `;
 
-// validation 상태에 따라 컬러 변경(#2BCF4F)
 const WarningText = styled.strong`
   margin: 5px 9px 0;
   font-family: 'Pretendard';
@@ -96,5 +119,5 @@ const WarningText = styled.strong`
   font-size: 12px;
   line-height: 150%;
   letter-spacing: -0.011em;
-  color: #ff4141;
+  color: ${(props) => (props.textColor ? '#2BCF4F' : '#ff4141')};
 `;
