@@ -4,12 +4,16 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { deleteRecord } from '../../actions/recordListActions';
 import axios from '../../api/apiController';
-import { ReactComponent as DeleteIcon } from '../../assets/delete.svg';
+import deleteIconBlack from '../../assets/delete-black.svg';
+import deleteIconGray from '../../assets/delete-gray.svg';
 import { ReactComponent as StarIcon } from '../../assets/star_icon.svg';
+import updateIconBlack from '../../assets/update-black.svg';
+import updateIconGray from '../../assets/update-gray.svg';
+
 import Button from '../common/Button';
 import Modal from '../common/Modal';
 
-export default function Failure({ failure, getRecord, num }) {
+export default function Failure({ failure, num }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isVisibleModal, setIsVisibleModal] = useState(false);
@@ -44,10 +48,8 @@ export default function Failure({ failure, getRecord, num }) {
             <span>{failure.feel}</span>
           </FeelText>
           <ButtonContainer>
-            <IconButton onClick={handleUpdate}>수정</IconButton>
-            <IconButton onClick={() => setIsVisibleModal(true)}>
-              <DeleteIcon />
-            </IconButton>
+            <IconButton onClick={handleUpdate} before={updateIconGray} after={updateIconBlack} />
+            <IconButton onClick={() => setIsVisibleModal(true)} before={deleteIconGray} after={deleteIconBlack} />
           </ButtonContainer>
         </Feel>
       </Main>
@@ -118,6 +120,7 @@ const Content = styled.div`
   font-size: 14px;
   color: #848484;
   margin-bottom: 12px;
+  word-break: break-all;
 `;
 
 const Feel = styled.div`
@@ -139,14 +142,19 @@ const FeelText = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
-  gap: 10px;
+  gap: 2px;
 `;
 
 const IconButton = styled.button`
+  content: url(${(props) => props.before});
   cursor: pointer;
   display: flex;
   align-items: center;
-  height: 8px;
+  width: 24px;
+  height: 24px;
+  :hover {
+    content: url(${(props) => props.after});
+  }
 `;
 
 const RecordPageModalButtonContainer = styled.div`
