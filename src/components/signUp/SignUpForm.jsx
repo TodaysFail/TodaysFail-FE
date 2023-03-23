@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 
 export default function SignUpForm({
@@ -14,12 +14,20 @@ export default function SignUpForm({
 }) {
   const [border, setBorder] = useState(false);
 
-  const getValue = (e) => {
-    const value = e.target.value;
+  const getValue = useCallback(
+    (e) => {
+      const value = e.target.value;
 
-    setValue(value);
-    setBorder(false);
-  };
+      if (value.length > 0) {
+        setValue(value);
+        setBorder(false);
+      } else {
+        setValue('');
+        setBorder(true);
+      }
+    },
+    [value],
+  );
 
   const renderBorder = () => {
     isValid ? setBorder(false) : setBorder(true);
