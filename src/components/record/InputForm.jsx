@@ -16,6 +16,7 @@ export default function InputForm({ label, placeholder, maxLength, text, setText
         <ContentInput
           onInput={handleResizeHeight}
           ref={textRef}
+          value={text}
           onChange={(e) => setText(e.target.value)}
           placeholder={placeholder}
           maxLength={maxLength}
