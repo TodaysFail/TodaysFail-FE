@@ -67,7 +67,7 @@ export default function SignUpPage() {
   }, [pwCheck]);
 
   const buttonType = {
-    bgColor: 'black',
+    bgColor: isNicknameValid && isPwValid && isPwCheckValid ? 'black' : 'white',
     width: '359',
     fontSize: '16',
     isFixed: false,
@@ -109,6 +109,16 @@ export default function SignUpPage() {
     isValid: isPwCheckValid,
   };
 
+  const activeButton = () => {
+    if (isNicknameValid && isPwValid && isPwCheckValid) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  const handleClick = () => {};
+
   return (
     <LoginContainer>
       <Logo />
@@ -120,7 +130,7 @@ export default function SignUpPage() {
       </FormContainer>
       {/* 공통 컴포넌트 수정 후 버튼 수정 */}
       <ButtonContainer>
-        <Button type={buttonType} text={'가입하기'} />
+        <Button disabled={activeButton} type={buttonType} text={'가입하기'} handleClick={handleClick} />
       </ButtonContainer>
     </LoginContainer>
   );
