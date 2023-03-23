@@ -61,6 +61,8 @@ export default function SignUpPage() {
       } else {
         return [setPwCheckWarnText('비밀번호가 일치하지 않습니다'), setIsPwCheckValid(false)];
       }
+    } else {
+      return [setPwCheckWarnText(''), setIsPwCheckValid(false)];
     }
   };
 
