@@ -49,15 +49,10 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   margin: 0 auto;
   background-color: white;
-  overflow: scroll;
   padding-top: 16px;
-
-  ::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 const Main = styled.div`
