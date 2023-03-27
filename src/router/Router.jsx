@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import axios from '../api/apiController';
 import MainLayout from '../components/layout/MainLayout';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import MyPage from '../pages/MyPage/MyPage';
@@ -40,17 +39,6 @@ export default function Router() {
     },
   ];
 
-  const [authenticated, setAuthenticated] = useState(true);
-
-  useEffect(() => {
-    axios
-      .get('/member/info')
-      .then((res) => {
-        setAuthenticated(res.status === 200);
-      })
-      .catch(() => setAuthenticated(false));
-  }, []);
-
   return (
     <BrowserRouter>
       <Routes>
@@ -59,10 +47,7 @@ export default function Router() {
             <Route element={route.element} path={route.path} key={route.path} />
           ) : (
             <Route path='/' element={<MainLayout />} key={route.path}>
-              <Route
-                path={route.path}
-                element={<AuthRoute component={route.element} authenticated={authenticated} />}
-              />
+              <Route path={route.path} element={<AuthRoute component={route.element} />} />
             </Route>
           ),
         )}
