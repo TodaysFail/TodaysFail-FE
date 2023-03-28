@@ -7,7 +7,7 @@ import receiptBg from '../../assets/receipt.svg';
 import FailureList from './FailureList';
 import RecordDateCard from './RecordDateCard';
 
-export default function ReceiptShareContainer() {
+export default function ReceiptShareContainer({ setNickname }) {
   const [date, setDate] = useState('');
   const [total, setTotal] = useState('');
   const [receiptList, setReceiptList] = useState([]);
@@ -19,6 +19,7 @@ export default function ReceiptShareContainer() {
     setDate(data.date);
     setReceiptList(data.receiptList);
     setTotal(data.total);
+    setNickname(data.writerName || '');
 
     return data;
   };

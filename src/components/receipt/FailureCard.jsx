@@ -68,6 +68,7 @@ const ContentsText = styled.p`
   font-size: 12px;
   color: #848484;
   margin: 11px 0 19px 0;
+  word-break: break-all;
 `;
 
 const ContentsFeel = styled.p`
