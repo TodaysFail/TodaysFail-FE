@@ -19,7 +19,7 @@ export default function DailyFailure({ failures, writer }) {
 
   return (
     <>
-      {failures.records.length ? (
+      {failures?.records?.length ? (
         <div>
           <DailyHeader>
             <FailureDate>{failures.date}</FailureDate>
