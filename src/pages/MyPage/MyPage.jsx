@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import axios from '../../api/apiController';
 import Button from '../../components/common/Button';
 import Logout from '../../components/common/Logout';
+import Modal from '../../components/common/Modal';
 import DailyFailureList from '../../components/myPage/DailyFailureList';
 import Profile from '../../components/myPage/Profile';
 import TodaysDate from '../../components/myPage/TodaysDate';
@@ -12,6 +13,7 @@ export default function MyPage() {
   const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
   const [isLogoutHover, setIsLogoutHover] = useState(false);
+  const [isVisibleModal, setIsVisibleModal] = useState(false);
 
   useEffect(() => {
     axios
@@ -46,10 +48,27 @@ export default function MyPage() {
         onMouseLeave={() => {
           setIsLogoutHover(false);
         }}
-        onClick={handleLogoutClick}
+        onClick={() => setIsVisibleModal(true)}
       >
         <Logout isHover={isLogoutHover} />
       </span>
+      {isVisibleModal && (
+        <Modal mainText='로그아웃' subText='오늘의 실패에서 로그아웃 하시겠어요?'>
+          <ModalButtonContainer>
+            <Button
+              type={{ bgColor: 'white', width: 95, fontSize: 16 }}
+              text='취소하기'
+              handleClick={() => setIsVisibleModal(false)}
+            />
+            <Button
+              type={{ bgColor: 'black', width: 95, fontSize: 16 }}
+              text='로그아웃'
+              handleClick={handleLogoutClick}
+            />
+          </ModalButtonContainer>
+        </Modal>
+      )}
+
       <Main>
         <TodaysDate />
         <Profile nickname={nickname} />
@@ -80,4 +99,9 @@ const Main = styled.div`
   height: 100%;
   padding: 0 15px;
   font-family: 'Pretendard-Light';
+`;
+
+const ModalButtonContainer = styled.div`
+  display: flex;
+  gap: 10px;
 `;
