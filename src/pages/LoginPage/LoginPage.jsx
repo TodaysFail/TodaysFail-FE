@@ -3,20 +3,21 @@ import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import axios from '../../api/apiController';
 import Logo from '../../components/common/Logo';
-import Button from '../../components/login/Button';
-import ValidForm from '../../components/login/ValidForm';
+import Button from '../../components/common/Button';
+import Form from '../../components/login/Form';
 
 export default function LoginPage() {
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
-  const [isNicknameValid, setIsNicknameValid] = useState(false);
-  const [isPasswordValid, setIsPasswordValid] = useState(false);
   const [warningMessage, setWarningMessage] = useState('');
 
   const navigate = useNavigate();
 
-  // 시작버튼 클릭 시 서버에 닉네임 전달
+  // 시작버튼 클릭 시 서버에 로그인 정보 전달
   const submitLoginInfo = async (nickname, password) => {
+    if (!nickname) return setWarningMessage('아이디를 입력해 주세요.');
+    if (!password) return setWarningMessage('비밀번호를 입력해 주세요.');
+
     await axios
       .post(`/member/login`, {
         name: nickname,
@@ -35,8 +36,7 @@ export default function LoginPage() {
     value: nickname,
     setValue: setNickname,
     placeholder: '닉네임을 입력하세요!',
-    regex: /^[a-z0-9ㄱ-ㅎ가-힣]{1,10}$/,
-    setIsValid: setIsNicknameValid,
+    setWarningMessage,
   };
 
   const passwordProps = {
@@ -44,14 +44,7 @@ export default function LoginPage() {
     value: password,
     setValue: setPassword,
     placeholder: '비밀번호를 입력하세요!',
-    regex: /^[a-zA-Z0-9]{1,}$/,
-    setIsValid: setIsPasswordValid,
-  };
-
-  const activateButton = (isNicknameValid, isPasswordValid, password) => {
-    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-
-    return !(isNicknameValid && isPasswordValid && regex.test(password));
+    setWarningMessage,
   };
 
   return (
@@ -62,23 +55,30 @@ export default function LoginPage() {
           <LoginTitle>하루의 실패를 기록하고 성장하는 법</LoginTitle>
         </LoginTitleContainer>
         <LoginFormContainer>
-          <ValidForm {...nicknameProps} />
-          <ValidForm {...passwordProps} />
+          <Form {...nicknameProps} />
+          <Form {...passwordProps} />
         </LoginFormContainer>
         <LoginNoticeContainer>
           <LoginNoticeContant>
             <Notice color='#ff4141'>{warningMessage}</Notice>
           </LoginNoticeContant>
         </LoginNoticeContainer>
-        <LoginButtonContainer>
+        <ButtonContainer>
           <Button
+            type={{ bgColor: 'black', width: 360 }}
             text='시작하기'
-            disabled={activateButton(isNicknameValid, isPasswordValid, password)}
             handleClick={() => {
               submitLoginInfo(nickname, password);
             }}
           ></Button>
-        </LoginButtonContainer>
+          <Button
+            type={{ bgColor: 'white', width: 360 }}
+            text='회원가입'
+            handleClick={() => {
+              navigate('/signup');
+            }}
+          ></Button>
+        </ButtonContainer>
       </Main>
     </LoginContainer>
   );
@@ -118,10 +118,11 @@ const LoginFormContainer = styled.div`
   width: 100%;
 `;
 
-const LoginButtonContainer = styled.div`
+const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 10px;
 `;
 
 const LoginNoticeContainer = styled.div`
