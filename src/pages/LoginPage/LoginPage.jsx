@@ -36,6 +36,7 @@ export default function LoginPage() {
     value: nickname,
     setValue: setNickname,
     placeholder: '닉네임을 입력하세요!',
+    setWarningMessage,
   };
 
   const passwordProps = {
@@ -43,6 +44,7 @@ export default function LoginPage() {
     value: password,
     setValue: setPassword,
     placeholder: '비밀번호를 입력하세요!',
+    setWarningMessage,
   };
 
   return (

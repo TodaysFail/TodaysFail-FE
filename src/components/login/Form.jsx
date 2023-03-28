@@ -2,13 +2,18 @@ import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Vector } from '../../assets/Vector.svg';
 
-export default function Form({ type, value, setValue, placeholder }) {
+export default function Form({ type, value, setValue, placeholder, setWarningMessage }) {
+  const hadleChange = (e) => {
+    setValue(e.target.value);
+    setWarningMessage('');
+  };
+
   return (
     <Wrapper>
       <Bullet>
         <Vector />
       </Bullet>
-      <StyledInput type={type} placeholder={placeholder} value={value} onChange={(e) => setValue(e.target.value)} />
+      <StyledInput type={type} placeholder={placeholder} value={value} onChange={hadleChange} />
     </Wrapper>
   );
 }
