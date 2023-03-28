@@ -49,5 +49,6 @@
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-prettier": "^4.2.1",
     "prettier": "^2.8.4"
-  }
+  },
+  "proxy": "https://port-0-todaysfail-be-r8xoo2mlejm1bez.sel3.cloudtype.app/api/v1"
 }

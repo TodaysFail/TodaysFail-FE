@@ -1,10 +1,8 @@
 import axios from 'axios';
 
-export const BASE_URL = process.env.REACT_APP_BASE_URL;
-
 // 사용자 정의 구성을 사용하는 axios 인스턴스 생성
 export default axios.create({
-  baseURL: BASE_URL,
+  baseURL: '',
   headers: {
     'Content-Type': 'application/json',
     // Authorization: `Bearer`, 토큰
