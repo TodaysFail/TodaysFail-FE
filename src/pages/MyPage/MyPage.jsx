@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from '../../api/apiController';
 import Button from '../../components/common/Button';
+import Logout from '../../components/common/Logout';
 import DailyFailureList from '../../components/myPage/DailyFailureList';
 import Profile from '../../components/myPage/Profile';
 import TodaysDate from '../../components/myPage/TodaysDate';
@@ -10,6 +11,7 @@ import TodaysDate from '../../components/myPage/TodaysDate';
 export default function MyPage() {
   const navigate = useNavigate();
   const [nickname, setNickname] = useState('');
+  const [isLogoutHover, setIsLogoutHover] = useState(false);
 
   useEffect(() => {
     axios
@@ -24,6 +26,10 @@ export default function MyPage() {
     navigate('/recordPage');
   };
 
+  const handleLogoutClick = () => {
+    axios.post('/member/logout').then(() => navigate('/login'));
+  };
+
   const buttonType = {
     bgColor: 'black',
     width: '143',
@@ -33,6 +39,17 @@ export default function MyPage() {
 
   return (
     <Container>
+      <span
+        onMouseEnter={() => {
+          setIsLogoutHover(true);
+        }}
+        onMouseLeave={() => {
+          setIsLogoutHover(false);
+        }}
+        onClick={handleLogoutClick}
+      >
+        <Logout isHover={isLogoutHover} />
+      </span>
       <Main>
         <TodaysDate />
         <Profile nickname={nickname} />
