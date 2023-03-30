@@ -17,7 +17,8 @@ export default function RecordPage() {
   const recordId = searchParams.get('recordId');
 
   // 모달 오픈 체크 상태
-  const [isVisibleModal, setIsVisibleModal] = useState(false);
+  const [isVisibleCancleModal, setIsVisibleCancleModal] = useState(false);
+  const [isVisibleSaveModal, setIsVisibleSaveModal] = useState(false);
   const navigate = useNavigate();
 
   const getContent = useCallback(async () => {
@@ -44,6 +45,8 @@ export default function RecordPage() {
   }, [getContent, recordId, setContent]);
 
   const submitContent = async () => {
+    if (!(titleText && contentText && feelText)) return setIsVisibleSaveModal(true);
+
     if (recordId) {
       await axios
         .put(`/record`, {
@@ -119,12 +122,12 @@ export default function RecordPage() {
           type={{ bgColor: 'white', width: 360, fontSize: 16 }}
           text='취소하기'
           handleClick={() => {
-            setIsVisibleModal(true);
+            setIsVisibleCancleModal(true);
           }}
         />
         <Button type={{ bgColor: 'black', width: 360, fontSize: 16 }} text='저장하기' handleClick={submitContent} />
       </RecordPageButtonContainer>
-      {isVisibleModal && (
+      {isVisibleCancleModal && (
         <Modal mainText='정말 취소하실건가요?' subText='실패를 기록하면 성장할 가능성이 높아져요!'>
           <RecordPageModalButtonContainer>
             <Button
@@ -136,7 +139,20 @@ export default function RecordPage() {
               type={{ bgColor: 'black', width: 95, fontSize: 16 }}
               text='계속하기'
               handleClick={() => {
-                setIsVisibleModal(false);
+                setIsVisibleCancleModal(false);
+              }}
+            />
+          </RecordPageModalButtonContainer>
+        </Modal>
+      )}
+      {isVisibleSaveModal && (
+        <Modal mainText='내용을 입력해주세요!' subText='내용이 전부 입력되지 않았습니다.'>
+          <RecordPageModalButtonContainer>
+            <Button
+              type={{ bgColor: 'black', width: 95, fontSize: 16 }}
+              text='확인하기'
+              handleClick={() => {
+                setIsVisibleSaveModal(false);
               }}
             />
           </RecordPageModalButtonContainer>

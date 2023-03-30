@@ -21,7 +21,9 @@ export default function MyPage() {
       .then((res) => {
         setNickname(res.data.name);
       })
-      .catch(() => navigate('/login'));
+      .catch((err) => {
+        navigate('/login');
+      });
   }, [navigate]);
 
   const handleClick = () => {
