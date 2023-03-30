@@ -45,6 +45,8 @@ export default function RecordPage() {
   }, [getContent, recordId, setContent]);
 
   const submitContent = async () => {
+    if (!(titleText && contentText && feelText)) return setIsVisibleSaveModal(true);
+
     if (recordId) {
       await axios
         .put(`/record`, {
@@ -123,14 +125,7 @@ export default function RecordPage() {
             setIsVisibleCancleModal(true);
           }}
         />
-        <Button
-          type={{ bgColor: 'black', width: 360, fontSize: 16 }}
-          text='저장하기'
-          handleClick={() => {
-            submitContent();
-            setIsVisibleSaveModal(true);
-          }}
-        />
+        <Button type={{ bgColor: 'black', width: 360, fontSize: 16 }} text='저장하기' handleClick={submitContent} />
       </RecordPageButtonContainer>
       {isVisibleCancleModal && (
         <Modal mainText='정말 취소하실건가요?' subText='실패를 기록하면 성장할 가능성이 높아져요!'>
