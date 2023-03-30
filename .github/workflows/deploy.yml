@@ -1,0 +1,40 @@
+name: Deploy to cloudtype
+on:
+  push:
+    branches:
+      - develop
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Connect deploy key
+        uses: cloudtype-github-actions/connect@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          ghtoken: ${{ secrets.GHP_TOKEN }}
+      - name: Deploy
+        uses: cloudtype-github-actions/deploy@v1
+        with:
+          token: ${{ secrets.CLOUDTYPE_TOKEN }}
+          project: todays_fail/today_fail
+          stage: dev
+          yaml: >
+            name: todaysfail-fe
+
+            app: web
+
+            options:
+              docbase: /build
+              nodeversion: 14
+              build: npm run build
+              spa: true
+              buildenv:
+                - name: REACT_APP_BASE_URL
+                  value: https://nginx-nginx-r8xoo2mlejm1bez.sel3.cloudtype.app/api/v1
+            context:
+              git:
+                url: git@github.com:${{ github.repository }}.git
+                ref: ${{ github.ref }}
+              preset: react
