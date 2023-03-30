@@ -1,12 +1,15 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 export default function InputForm({ label, placeholder, maxLength, text, setText }) {
   const textRef = useRef(null);
 
-  const handleResizeHeight = () => {
-    textRef.current.style.height = 'auto';
+  useEffect(() => {
     textRef.current.style.height = `${textRef.current.scrollHeight}px`;
+  }, [text]);
+
+  const handleChange = (e) => {
+    setText(e.target.value);
   };
 
   return (
@@ -14,10 +17,9 @@ export default function InputForm({ label, placeholder, maxLength, text, setText
       <InputContainer>
         <Label>{label}</Label>
         <ContentInput
-          onInput={handleResizeHeight}
           ref={textRef}
           value={text}
-          onChange={(e) => setText(e.target.value)}
+          onChange={handleChange}
           placeholder={placeholder}
           maxLength={maxLength}
         />
