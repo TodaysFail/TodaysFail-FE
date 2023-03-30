@@ -18,7 +18,7 @@ export default function DailyFailure({ failures, writer }) {
   };
 
   return (
-    <>
+    <DailyFailureContainer>
       {failures?.records?.length ? (
         <div>
           <DailyHeader>
@@ -38,7 +38,7 @@ export default function DailyFailure({ failures, writer }) {
       ) : (
         <div></div>
       )}
-    </>
+    </DailyFailureContainer>
   );
 }
 
@@ -63,4 +63,12 @@ const FailuresContainer = styled.div`
   border-radius: 10px;
   padding: 18px 14px;
   gap: 18px;
+`;
+
+const DailyFailureContainer = styled.div`
+  margin-bottom: 19px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
 `;
