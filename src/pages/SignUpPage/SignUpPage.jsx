@@ -93,7 +93,7 @@ export default function SignUpPage() {
 
   const pwCheckValid = () => {
     if (pwCheck.length > 0) {
-      if (password === pwCheck) {
+      if (pwCheck === password) {
         return [setPwCheckWarnText('비밀번호가 일치합니다'), setIsPwCheckValid(true)];
       } else {
         return [setPwCheckWarnText('비밀번호가 일치하지 않습니다'), setIsPwCheckValid(false)];
@@ -117,11 +117,8 @@ export default function SignUpPage() {
 
   useUpdateEffect(() => {
     passwordValid();
-  }, [password]);
-
-  useUpdateEffect(() => {
     pwCheckValid();
-  }, [pwCheck]);
+  }, [password, pwCheck]);
 
   const activeButton = () => {
     if (isNicknameValid && isNicknameValid && isPwCheckValid) {
