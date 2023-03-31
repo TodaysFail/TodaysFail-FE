@@ -92,7 +92,9 @@ export default function SignUpPage() {
   };
 
   const pwCheckValid = () => {
-    if (pwCheck.length > 0) {
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\w\W]{8,}$/;
+
+    if (pwCheck.length > 0 && regex.test(pwCheck)) {
       if (pwCheck === password) {
         return [setPwCheckWarnText('비밀번호가 일치합니다'), setIsPwCheckValid(true)];
       } else {
@@ -128,7 +130,7 @@ export default function SignUpPage() {
     }
   };
 
-  const handleClick = async () => {
+  const handleClick = async (e) => {
     if (!isDisabled) {
       await axios
         .post(`/member`, {
@@ -139,6 +141,8 @@ export default function SignUpPage() {
           navigate('/login');
         })
         .catch((res) => {});
+    } else {
+      return e.preventDefault();
     }
   };
 
@@ -159,10 +163,10 @@ export default function SignUpPage() {
         <SignUpForm {...nicknameProps} />
         <SignUpForm {...passwordProps} />
         <SignUpForm {...passwordCheckProps} />
+        <ButtonContainer>
+          <SignUpButton text={'가입하기'} handleClick={handleClick} isDisabled={isDisabled} />
+        </ButtonContainer>
       </FormContainer>
-      <ButtonContainer>
-        <SignUpButton text={'가입하기'} handleClick={handleClick} isDisabled={isDisabled} />
-      </ButtonContainer>
     </LoginContainer>
   );
 }
