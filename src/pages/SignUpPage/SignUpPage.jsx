@@ -137,12 +137,18 @@ export default function SignUpPage() {
           name: nickname,
           password,
         })
-        .then((res) => {
+        .then(() => {
           navigate('/login');
         })
         .catch((res) => {});
     } else {
       return e.preventDefault();
+    }
+  };
+
+  const handleEnter = (e) => {
+    if (e.keyCode === 13) {
+      handleClick();
     }
   };
 
@@ -159,14 +165,14 @@ export default function SignUpPage() {
     <LoginContainer>
       <Logo />
       <Title>회원가입</Title>
-      <FormContainer>
+      <FormContainer onKeyUp={handleEnter}>
         <SignUpForm {...nicknameProps} />
         <SignUpForm {...passwordProps} />
         <SignUpForm {...passwordCheckProps} />
-        <ButtonContainer>
-          <SignUpButton text={'가입하기'} handleClick={handleClick} isDisabled={isDisabled} />
-        </ButtonContainer>
       </FormContainer>
+      <ButtonContainer>
+        <SignUpButton text={'가입하기'} handleClick={handleClick} isDisabled={isDisabled} />
+      </ButtonContainer>
     </LoginContainer>
   );
 }
