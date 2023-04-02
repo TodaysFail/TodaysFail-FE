@@ -31,6 +31,12 @@ export default function LoginPage() {
       });
   };
 
+  const handleEnter = (e) => {
+    if (e.keyCode === 13) {
+      submitLoginInfo(nickname, password);
+    }
+  };
+
   const nicknameProps = {
     type: 'text',
     value: nickname,
@@ -54,7 +60,7 @@ export default function LoginPage() {
           <Logo width={'197px'} />
           <LoginTitle>하루의 실패를 기록하고 성장하는 법</LoginTitle>
         </LoginTitleContainer>
-        <LoginFormContainer>
+        <LoginFormContainer onKeyUp={handleEnter}>
           <Form {...nicknameProps} />
           <Form {...passwordProps} />
         </LoginFormContainer>
