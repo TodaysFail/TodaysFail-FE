@@ -13,6 +13,7 @@ export default function SignUpForm({
   isValid,
 }) {
   const [border, setBorder] = useState(false);
+  const [isCapsLockOn, setIsCapsLockOn] = useState(false);
 
   const getValue = useCallback(
     (e) => {
@@ -39,6 +40,14 @@ export default function SignUpForm({
     setBorder(false);
   };
 
+  const renderCapsLock = (e) => {
+    if (e.getModifierState('CapsLock')) {
+      setIsCapsLockOn(true);
+    } else {
+      setIsCapsLockOn(false);
+    }
+  };
+
   return (
     <Container>
       <Title htmlFor={inputID}>{title}</Title>
@@ -50,12 +59,17 @@ export default function SignUpForm({
           onChange={getValue}
           onFocus={renderFocusBorder}
           onBlur={renderFocusOutBorder}
+          onKeyUp={renderCapsLock}
         />
         <TextCounter view={isValid}>
           {value.length} / {maxLength}
         </TextCounter>
       </InputContainer>
-      <WarningText textColor={isValid}>{warningText}</WarningText>
+      {warningText ? (
+        <WarningText textColor={isValid}>{warningText}</WarningText>
+      ) : (
+        isCapsLockOn && <WarningText textColor={false}>CapsLock이 켜져있습니다</WarningText>
+      )}
     </Container>
   );
 }
