@@ -118,8 +118,12 @@ export default function SignUpPage() {
   }, [nickname]);
 
   useUpdateEffect(() => {
-    setPwWarnText('');
-    setPwCheckWarnText('');
+    if (isPwValid) {
+      setPwCheckWarnText('');
+    } else {
+      setPwCheckWarnText('');
+      setPwWarnText('');
+    }
 
     const pwValidTimer = setTimeout(() => {
       passwordValid();
