@@ -106,6 +106,8 @@ export default function SignUpPage() {
   };
 
   useUpdateEffect(() => {
+    setNicknameWarnText('');
+
     const nicknameValidTimer = setTimeout(() => {
       nicknameValid();
     }, 1000);
@@ -116,6 +118,9 @@ export default function SignUpPage() {
   }, [nickname]);
 
   useUpdateEffect(() => {
+    setPwWarnText('');
+    setPwCheckWarnText('');
+
     const pwValidTimer = setTimeout(() => {
       passwordValid();
       pwCheckValid();
