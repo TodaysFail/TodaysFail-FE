@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDebounce, useUpdateEffect } from 'react-use';
+import { useUpdateEffect } from 'react-use';
 import styled from 'styled-components';
 import axios from '../../api/apiController';
 import Logo from '../../components/common/Logo';
@@ -106,20 +106,33 @@ export default function SignUpPage() {
   };
 
   useUpdateEffect(() => {
-    nicknameValid();
+    setNicknameWarnText('');
+
+    const nicknameValidTimer = setTimeout(() => {
+      nicknameValid();
+    }, 1000);
+
+    return () => {
+      clearTimeout(nicknameValidTimer);
+    };
   }, [nickname]);
 
-  useDebounce(
-    () => {
-      nicknameValid();
-    },
-    500,
-    [nickname],
-  );
-
   useUpdateEffect(() => {
-    passwordValid();
-    pwCheckValid();
+    if (isPwValid) {
+      setPwCheckWarnText('');
+    } else {
+      setPwCheckWarnText('');
+      setPwWarnText('');
+    }
+
+    const pwValidTimer = setTimeout(() => {
+      passwordValid();
+      pwCheckValid();
+    }, 1000);
+
+    return () => {
+      clearTimeout(pwValidTimer);
+    };
   }, [password, pwCheck]);
 
   const activeButton = () => {
