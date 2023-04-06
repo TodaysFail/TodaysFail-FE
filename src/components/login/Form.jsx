@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Vector } from '../../assets/Vector.svg';
 
-export default function Form({ type, value, setValue, placeholder, setWarningMessage }) {
+export default function Form({ type, value, setValue, placeholder, setWarningMessage, onKeyDown }) {
   const handleChange = (e) => {
     setValue(e.target.value);
     setWarningMessage('');
@@ -13,7 +13,7 @@ export default function Form({ type, value, setValue, placeholder, setWarningMes
       <Bullet>
         <Vector />
       </Bullet>
-      <StyledInput type={type} placeholder={placeholder} value={value} onChange={handleChange} />
+      <StyledInput type={type} placeholder={placeholder} value={value} onChange={handleChange} onKeyDown={onKeyDown} />
     </Wrapper>
   );
 }

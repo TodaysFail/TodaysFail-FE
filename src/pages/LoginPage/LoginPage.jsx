@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import styled from 'styled-components';
 import axios from '../../api/apiController';
@@ -10,6 +10,7 @@ export default function LoginPage() {
   const [nickname, setNickname] = useState('');
   const [password, setPassword] = useState('');
   const [warningMessage, setWarningMessage] = useState('');
+  const [isCapsLock, setIsCapsLock] = useState(false);
 
   const navigate = useNavigate();
 
@@ -32,10 +33,20 @@ export default function LoginPage() {
   };
 
   const handleEnter = (e) => {
-    if (e.keyCode === 13) {
-      submitLoginInfo(nickname, password);
-    }
+    if (e.keyCode === 13) submitLoginInfo(nickname, password);
   };
+
+  const checkCapsLock = (e) => {
+    if (e.getModifierState('CapsLock')) return setIsCapsLock(true);
+
+    setIsCapsLock(false);
+  };
+
+  useEffect(() => {
+    if (isCapsLock) {
+      setWarningMessage('CapsLock이 켜져 있습니다.');
+    } else setWarningMessage('');
+  }, [isCapsLock, password]);
 
   const nicknameProps = {
     type: 'text',
@@ -51,6 +62,7 @@ export default function LoginPage() {
     setValue: setPassword,
     placeholder: '비밀번호를 입력하세요!',
     setWarningMessage,
+    onKeyDown: checkCapsLock,
   };
 
   return (
@@ -60,7 +72,7 @@ export default function LoginPage() {
           <Logo width={'197px'} />
           <LoginTitle>하루의 실패를 기록하고 성장하는 법</LoginTitle>
         </LoginTitleContainer>
-        <LoginFormContainer onKeyUp={handleEnter}>
+        <LoginFormContainer onKeyDown={handleEnter}>
           <Form {...nicknameProps} />
           <Form {...passwordProps} />
         </LoginFormContainer>
