@@ -26,8 +26,6 @@ export default function ReceiptShareContainer({ setNickname }) {
 
   useEffect(() => {
     getReceiptData();
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
