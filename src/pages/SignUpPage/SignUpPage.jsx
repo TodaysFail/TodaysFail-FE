@@ -12,13 +12,15 @@ export default function SignUpPage() {
   const [password, setPassword] = useState('');
   const [pwCheck, setPwCheck] = useState('');
   const [nicknameWarnText, setNicknameWarnText] = useState('');
-  const [isNicknameValid, setIsNicknameValid] = useState(false);
   const [pwWarnText, setPwWarnText] = useState('');
-  const [isPwValid, setIsPwValid] = useState(false);
   const [pwCheckWarnText, setPwCheckWarnText] = useState('');
+  const [isNicknameValid, setIsNicknameValid] = useState(false);
+  const [isPwValid, setIsPwValid] = useState(false);
   const [isPwCheckValid, setIsPwCheckValid] = useState(false);
   const [isDisabled, setIsDisabled] = useState(true);
   const navigate = useNavigate();
+  const nicknameRegex = /^[a-z0-9ㄱ-ㅎ가-힣]{1,10}$/;
+  const pwRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\w\W]{8,}$/;
 
   const nicknameProps = {
     title: '닉네임',
@@ -57,24 +59,18 @@ export default function SignUpPage() {
   };
 
   const nicknameValid = async () => {
-    const regex = /^[a-z0-9ㄱ-ㅎ가-힣]{1,10}$/;
-
     if (nickname.length > 0) {
-      try {
-        const { data } = await axios.get(`/member/duplicate/${nickname}`);
+      const { data } = await axios.get(`/member/duplicate/${nickname}`).catch((res) => {});
 
-        if (data) {
-          return [setNicknameWarnText('이미 존재하는 닉네임입니다'), setIsNicknameValid(false)];
-        } else if (!regex.test(nickname)) {
-          return [
-            setNicknameWarnText('10자 이하로 작성해 주세요 (한글/영문 소문자/숫자 중 조합)'),
-            setIsNicknameValid(false),
-          ];
-        } else {
-          return [setNicknameWarnText('사용할 수 있는 닉네임입니다'), setIsNicknameValid(true)];
-        }
-      } catch (error) {
-        console.log(error);
+      if (data) {
+        return [setNicknameWarnText('이미 존재하는 닉네임입니다'), setIsNicknameValid(false)];
+      } else if (!nicknameRegex.test(nickname)) {
+        return [
+          setNicknameWarnText('10자 이하로 작성해 주세요 (한글/영문 소문자/숫자 중 조합)'),
+          setIsNicknameValid(false),
+        ];
+      } else {
+        return [setNicknameWarnText('사용할 수 있는 닉네임입니다'), setIsNicknameValid(true)];
       }
     } else {
       return [setNicknameWarnText(''), setIsNicknameValid(false)];
@@ -82,10 +78,8 @@ export default function SignUpPage() {
   };
 
   const passwordValid = () => {
-    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\w\W]{8,}$/;
-
     if (password.length > 0) {
-      if (regex.test(password)) {
+      if (pwRegex.test(password)) {
         return [setPwWarnText('사용할 수 있는 비밀번호입니다'), setIsPwValid(true)];
       } else {
         return [setPwWarnText('8자 이상 입력해 주세요 (영문 대소문자/숫자 각 1자리 이상 조합)'), setIsPwValid(false)];
@@ -96,9 +90,7 @@ export default function SignUpPage() {
   };
 
   const pwCheckValid = () => {
-    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\w\W]{8,}$/;
-
-    if (pwCheck.length > 0 && regex.test(pwCheck)) {
+    if (pwCheck.length > 0 && pwRegex.test(pwCheck)) {
       if (pwCheck === password) {
         return [setPwCheckWarnText('비밀번호가 일치합니다'), setIsPwCheckValid(true)];
       } else {
