@@ -60,17 +60,21 @@ export default function SignUpPage() {
     const regex = /^[a-z0-9ㄱ-ㅎ가-힣]{1,10}$/;
 
     if (nickname.length > 0) {
-      const { data } = await axios.get(`/member/duplicate/${nickname}`);
+      try {
+        const { data } = await axios.get(`/member/duplicate/${nickname}`);
 
-      if (data) {
-        return [setNicknameWarnText('이미 존재하는 닉네임입니다'), setIsNicknameValid(false)];
-      } else if (!regex.test(nickname)) {
-        return [
-          setNicknameWarnText('10자 이하로 작성해 주세요 (한글/영문 소문자/숫자 중 조합)'),
-          setIsNicknameValid(false),
-        ];
-      } else {
-        return [setNicknameWarnText('사용할 수 있는 닉네임입니다'), setIsNicknameValid(true)];
+        if (data) {
+          return [setNicknameWarnText('이미 존재하는 닉네임입니다'), setIsNicknameValid(false)];
+        } else if (!regex.test(nickname)) {
+          return [
+            setNicknameWarnText('10자 이하로 작성해 주세요 (한글/영문 소문자/숫자 중 조합)'),
+            setIsNicknameValid(false),
+          ];
+        } else {
+          return [setNicknameWarnText('사용할 수 있는 닉네임입니다'), setIsNicknameValid(true)];
+        }
+      } catch (error) {
+        console.log(error);
       }
     } else {
       return [setNicknameWarnText(''), setIsNicknameValid(false)];
