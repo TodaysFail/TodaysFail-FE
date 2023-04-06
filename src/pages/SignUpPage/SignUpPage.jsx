@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDebounce, useUpdateEffect } from 'react-use';
+import { useUpdateEffect } from 'react-use';
 import styled from 'styled-components';
 import axios from '../../api/apiController';
 import Logo from '../../components/common/Logo';
@@ -92,8 +92,10 @@ export default function SignUpPage() {
   };
 
   const pwCheckValid = () => {
-    if (pwCheck.length > 0) {
-      if (password === pwCheck) {
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d\w\W]{8,}$/;
+
+    if (pwCheck.length > 0 && regex.test(pwCheck)) {
+      if (pwCheck === password) {
         return [setPwCheckWarnText('비밀번호가 일치합니다'), setIsPwCheckValid(true)];
       } else {
         return [setPwCheckWarnText('비밀번호가 일치하지 않습니다'), setIsPwCheckValid(false)];
@@ -104,24 +106,34 @@ export default function SignUpPage() {
   };
 
   useUpdateEffect(() => {
-    nicknameValid();
+    setNicknameWarnText('');
+
+    const nicknameValidTimer = setTimeout(() => {
+      nicknameValid();
+    }, 1000);
+
+    return () => {
+      clearTimeout(nicknameValidTimer);
+    };
   }, [nickname]);
 
-  useDebounce(
-    () => {
-      nicknameValid();
-    },
-    500,
-    [nickname],
-  );
-
   useUpdateEffect(() => {
-    passwordValid();
-  }, [password]);
+    if (isPwValid) {
+      setPwCheckWarnText('');
+    } else {
+      setPwCheckWarnText('');
+      setPwWarnText('');
+    }
 
-  useUpdateEffect(() => {
-    pwCheckValid();
-  }, [pwCheck]);
+    const pwValidTimer = setTimeout(() => {
+      passwordValid();
+      pwCheckValid();
+    }, 1000);
+
+    return () => {
+      clearTimeout(pwValidTimer);
+    };
+  }, [password, pwCheck]);
 
   const activeButton = () => {
     if (isNicknameValid && isNicknameValid && isPwCheckValid) {
@@ -131,17 +143,25 @@ export default function SignUpPage() {
     }
   };
 
-  const handleClick = async () => {
+  const handleClick = async (e) => {
     if (!isDisabled) {
       await axios
         .post(`/member`, {
           name: nickname,
           password,
         })
-        .then((res) => {
+        .then(() => {
           navigate('/login');
         })
         .catch((res) => {});
+    } else {
+      return e.preventDefault();
+    }
+  };
+
+  const handleEnter = (e) => {
+    if (e.keyCode === 13) {
+      handleClick();
     }
   };
 
@@ -158,7 +178,7 @@ export default function SignUpPage() {
     <LoginContainer>
       <Logo />
       <Title>회원가입</Title>
-      <FormContainer>
+      <FormContainer onKeyUp={handleEnter}>
         <SignUpForm {...nicknameProps} />
         <SignUpForm {...passwordProps} />
         <SignUpForm {...passwordCheckProps} />

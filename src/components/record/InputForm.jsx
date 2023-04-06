@@ -5,6 +5,7 @@ export default function InputForm({ label, placeholder, maxLength, text, setText
   const textRef = useRef(null);
 
   useEffect(() => {
+    textRef.current.style.height = 'auto';
     textRef.current.style.height = `${textRef.current.scrollHeight}px`;
   }, [text]);
 
