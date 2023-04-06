@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUpdateEffect } from 'react-use';
 import styled from 'styled-components';
@@ -139,13 +139,13 @@ export default function SignUpPage() {
     };
   }, [password, pwCheck]);
 
-  const activeButton = () => {
-    if (isNicknameValid && isPwValid && isPwCheckValid) {
-      return setIsDisabled(false);
-    } else {
-      return setIsDisabled(true);
-    }
-  };
+  const isActiveButton = useMemo(() => {
+    return isNicknameValid && isPwValid && isPwCheckValid;
+  }, [isNicknameValid, isPwValid, isPwCheckValid]);
+
+  useEffect(() => {
+    isActiveButton ? setIsDisabled(false) : setIsDisabled(true);
+  }, [isActiveButton]);
 
   const handleClick = async (e) => {
     if (!isDisabled) {
@@ -168,15 +168,6 @@ export default function SignUpPage() {
       handleClick();
     }
   };
-
-  useEffect(
-    () => {
-      activeButton();
-    },
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isNicknameValid, isPwValid, isPwCheckValid],
-  );
 
   return (
     <LoginContainer>
