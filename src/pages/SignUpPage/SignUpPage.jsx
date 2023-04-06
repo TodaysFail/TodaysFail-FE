@@ -136,7 +136,7 @@ export default function SignUpPage() {
   }, [password, pwCheck]);
 
   const activeButton = () => {
-    if (isNicknameValid && isNicknameValid && isPwCheckValid) {
+    if (isNicknameValid && isPwValid && isPwCheckValid) {
       return setIsDisabled(false);
     } else {
       return setIsDisabled(true);
@@ -171,7 +171,7 @@ export default function SignUpPage() {
     },
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isNicknameValid, isNicknameValid, isPwCheckValid],
+    [isNicknameValid, isPwValid, isPwCheckValid],
   );
 
   return (
