@@ -9,6 +9,7 @@ import SignUpPage from '../pages/SignUpPage/SignUpPage';
 import AuthRoute from './AuthRoute';
 
 import { NEED_AUTH, NO_AUTH, WHATEVER } from './const';
+import NoAuthRoute from './NoAuthRoute';
 
 export default function Router() {
   const routerData = [
@@ -44,7 +45,7 @@ export default function Router() {
       <Routes>
         {routerData.map((route) =>
           route.withAuth === NO_AUTH ? (
-            <Route element={route.element} path={route.path} key={route.path} />
+            <Route element={<NoAuthRoute component={route.element} />} path={route.path} key={route.path} />
           ) : (
             <Route path='/' element={<MainLayout />} key={route.path}>
               <Route path={route.path} element={<AuthRoute component={route.element} />} />

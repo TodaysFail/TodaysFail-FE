@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import axios from '../api/apiController';
 
-function AuthRoute({ component }) {
+function NoAuthRoute({ component }) {
   const [authenticated, setAuthenticated] = useState(undefined);
 
   useEffect(() => {
@@ -19,10 +19,10 @@ function AuthRoute({ component }) {
   if (authenticated === undefined) {
     return <div></div>;
   } else if (authenticated === true) {
-    return component;
+    return <Navigate to='/' />;
   } else if (authenticated === false) {
-    return <Navigate to='/login' />;
+    return component;
   }
 }
 
-export default AuthRoute;
+export default NoAuthRoute;

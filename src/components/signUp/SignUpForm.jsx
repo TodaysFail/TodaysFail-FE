@@ -15,22 +15,12 @@ export default function SignUpForm({
   const [border, setBorder] = useState(false);
   const [isCapsLockOn, setIsCapsLockOn] = useState(false);
 
-  const getValue = useCallback(
-    (e) => {
-      const value = e.target.value;
+  const getValue = useCallback((e) => {
+    const value = e.target.value;
 
-      if (value.length > 0) {
-        setValue(value);
-        setBorder(false);
-      } else {
-        setValue('');
-        setBorder(true);
-      }
-    },
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [value],
-  );
+    setValue(value);
+    setBorder(value.length === 0);
+  }, []);
 
   const renderFocusBorder = () => {
     isValid ? setBorder(false) : setBorder(true);
