@@ -6,6 +6,7 @@ import Button from '../../components/common/Button';
 import Logout from '../../components/common/Logout';
 import Modal from '../../components/common/Modal';
 import DailyFailureList from '../../components/myPage/DailyFailureList';
+import EventBanner from '../../components/myPage/EventBanner';
 import Profile from '../../components/myPage/Profile';
 import TodaysDate from '../../components/myPage/TodaysDate';
 
@@ -74,6 +75,7 @@ export default function MyPage() {
       <Main>
         <TodaysDate />
         <Profile nickname={nickname} />
+        <EventBanner />
         <DailyFailureList nickname={nickname} />
         <Button type={buttonType} handleClick={handleClick} text={'기록하기'} />
       </Main>
