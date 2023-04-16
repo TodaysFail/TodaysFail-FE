@@ -4,8 +4,14 @@ import coffee1 from '../../assets/coffee1.svg';
 import coffee2 from '../../assets/coffee2.svg';
 
 export default function EventBanner() {
+  const handleOpenSurvey = () => {
+    window.open(
+      'https://docs.google.com/forms/d/e/1FAIpQLSem4Wp0ynGckr-mMQT8W2LXJGVHNZ19Bz2GXVQvKJNPcvn7Sg/viewform?usp=sf_link',
+    );
+  };
+
   return (
-    <Banner>
+    <Banner onClick={handleOpenSurvey}>
       <Main>
         <MainText>오늘의 실패 사용 설문조사</MainText>
         <SubText>설문조사 참여하고 커피쿠폰 받아가세요!</SubText>
