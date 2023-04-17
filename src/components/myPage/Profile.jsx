@@ -26,7 +26,7 @@ const ProfileContainer = styled.div`
   color: white;
   border-radius: 10px;
   padding: 12px 20px 26px 20px;
-  margin-bottom: 26px;
+  margin-bottom: 15px;
 `;
 
 const ProfileMain = styled.div`
