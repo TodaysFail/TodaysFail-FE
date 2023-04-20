@@ -43,15 +43,23 @@ export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        {routerData.map((route) =>
-          route.withAuth === NO_AUTH ? (
-            <Route element={<NoAuthRoute component={route.element} />} path={route.path} key={route.path} />
-          ) : (
-            <Route path='/' element={<MainLayout />} key={route.path}>
-              <Route path={route.path} element={<AuthRoute component={route.element} />} />
-            </Route>
-          ),
-        )}
+        {routerData.map((route) => {
+          if (route.withAuth === NO_AUTH) {
+            return <Route element={<NoAuthRoute component={route.element} />} path={route.path} key={route.path} />;
+          } else if (route.withAuth === NEED_AUTH) {
+            return (
+              <Route path='/' element={<MainLayout />} key={route.path}>
+                <Route path={route.path} element={<AuthRoute component={route.element} />} />
+              </Route>
+            );
+          } else {
+            return (
+              <Route path='/' element={<MainLayout />} key={route.path}>
+                <Route path={route.path} element={route.element} />
+              </Route>
+            );
+          }
+        })}
       </Routes>
     </BrowserRouter>
   );
