@@ -176,13 +176,9 @@
 
 ```
 .github
- ┣ ISSUE_TEMPLATE
- ┃ ┗ feature-template.md
- ┣ workflows
- ┃ ┗ deploy.yml
- ┣ CODEOWNERS
- ┗ PULL_REQUEST_TEMPLATE.md
+ ┣ ...
 node_modules
+ ┣ ...
 public
  ┣ _redirects
  ┣ favicon.ico
@@ -194,25 +190,7 @@ src
  ┣ api
  ┃ ┗ apiController.jsx
  ┣ assets
- ┃ ┣ Vector.svg
- ┃ ┣ background.svg
- ┃ ┣ barcode.svg
- ┃ ┣ character.png
- ┃ ┣ coffee1.svg
- ┃ ┣ coffee2.svg
- ┃ ┣ delete-black.svg
- ┃ ┣ delete-gray.svg
- ┃ ┣ feel-icon.svg
- ┃ ┣ logo.png
- ┃ ┣ logout-background-hover.svg
- ┃ ┣ logout-background.svg
- ┃ ┣ logout-icon-hover.svg
- ┃ ┣ logout-icon.svg
- ┃ ┣ nofailures_icon.png
- ┃ ┣ receipt.svg
- ┃ ┣ star_icon.svg
- ┃ ┣ update-black.svg
- ┃ ┗ update-gray.svg
+ ┃ ┣ ...
  ┣ components
  ┃ ┣ common
  ┃ ┃ ┣ Button.jsx
@@ -420,8 +398,8 @@ src
 - 오픈 카톡, 디스콰이엇, 디스코드, 슬랙 등 여러 커뮤니티에 서비스 홍보
 
   - [🔗 디스콰이엇 프로젝트 공유 링크](https://disquiet.io/product/%EC%98%A4%EB%8A%98%EC%9D%98-%EC%8B%A4%ED%8C%A8)
-  - 디스콰이엇 실시간 트렌딩 프로덕트 2위 (2023.04.19 10:00PM 기준)<br>
-  <img width="299" alt="스크린샷 2023-04-19 오후 10 18 10" src="https://user-images.githubusercontent.com/96907832/233086974-e252ddbf-d533-44a3-8317-2619a5e5853b.png">
+  - 디스콰이엇 실시간 트렌딩 프로덕트 1위 (2023.04.20 기준)<br>
+  <img width="299" alt="스크린샷 2023-04-19 오후 10 18 10" src="https://github.com/TodaysFail/TodaysFail-FE/assets/96907832/8e767930-0e5d-4145-b3d9-b043b0620c89">
 
     <details>
     <summary>홍보 활동</summary>
