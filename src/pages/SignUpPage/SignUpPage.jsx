@@ -207,5 +207,7 @@ const FormContainer = styled.form`
 `;
 
 const ButtonContainer = styled.div`
-  margin-top: 79px;
+  /* margin-top: 79px; */
+  position: fixed;
+  top: 660px;
 `;
