@@ -46,6 +46,7 @@ export default function SignUpForm({
           id={inputID}
           placeholder={placeholder}
           type={type}
+          maxLength={maxLength}
           onChange={getValue}
           onFocus={renderFocusBorder}
           onBlur={renderFocusOutBorder}
